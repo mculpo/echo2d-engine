@@ -388,11 +388,16 @@
     <ClInclude Include="libs\lua\luaconf.h" />
     <ClInclude Include="libs\lua\lualib.h" />
     <ClInclude Include="libs\sol\sol.hpp" />
-    <ClInclude Include="src\Base.h" />
-    <ClInclude Include="src\Core.h" />
-    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Components\TransformComponent.h" />
+    <ClInclude Include="src\ECS\ECS.h" />
+    <ClInclude Include="src\Logger\Logger.h" />
+    <ClInclude Include="src\Core\Base.h" />
+    <ClInclude Include="src\Core\Core.h" />
+    <ClInclude Include="src\Game\Game.h" />
+    <ClInclude Include="src\Systems\MovementSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\tilemaps\jungle.map" />
     <None Include="libs\glm\detail\func_common.inl" />
     <None Include="libs\glm\detail\func_common_simd.inl" />
     <None Include="libs\glm\detail\func_exponential.inl" />
@@ -525,6 +530,11 @@
     <None Include="libs\glm\gtx\vector_angle.inl" />
     <None Include="libs\glm\gtx\vector_query.inl" />
     <None Include="libs\glm\gtx\wrap.inl" />
+    <None Include="lua54.dll" />
+    <None Include="SDL2.dll" />
+    <None Include="SDL2_image.dll" />
+    <None Include="SDL2_mixer.dll" />
+    <None Include="SDL2_ttf.dll" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="libs\glm\detail\glm.cpp" />
@@ -533,11 +543,43 @@
     <ClCompile Include="libs\imgui\imgui_draw.cpp" />
     <ClCompile Include="libs\imgui\imgui_sdl.cpp" />
     <ClCompile Include="libs\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\ECS\ECS.cpp" />
+    <ClCompile Include="src\Game\Game.cpp" />
+    <ClCompile Include="src\Logger\Logger.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="libs\lua\liblua54.a" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\images\bullet.png" />
+    <Image Include="assets\images\chopper-spritesheet.png" />
+    <Image Include="assets\images\chopper.png" />
+    <Image Include="assets\images\landing-base.png" />
+    <Image Include="assets\images\radar.png" />
+    <Image Include="assets\images\takeoff-base.png" />
+    <Image Include="assets\images\tank-panther-down.png" />
+    <Image Include="assets\images\tank-panther-left.png" />
+    <Image Include="assets\images\tank-panther-right.png" />
+    <Image Include="assets\images\tank-panther-up.png" />
+    <Image Include="assets\images\tank-tiger-down.png" />
+    <Image Include="assets\images\tank-tiger-left.png" />
+    <Image Include="assets\images\tank-tiger-right.png" />
+    <Image Include="assets\images\tank-tiger-up.png" />
+    <Image Include="assets\images\tree.png" />
+    <Image Include="assets\images\truck-ford-down.png" />
+    <Image Include="assets\images\truck-ford-killed.png" />
+    <Image Include="assets\images\truck-ford-left.png" />
+    <Image Include="assets\images\truck-ford-right.png" />
+    <Image Include="assets\images\truck-ford-up.png" />
+    <Image Include="assets\tilemaps\jungle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\sounds\helicopter.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\arial.ttf" />
+    <Font Include="assets\fonts\charriot.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
