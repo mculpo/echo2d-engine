@@ -1,15 +1,17 @@
 #include "ECS.h"
 
+int IComponent::mNextId = 0;
+
 int Entity::GetId() const {
 	return mId;
 }
 
-void System::AddEntityToSystem(Entity entity)
+void System::AddEntityToSystem(Entity pEntity)
 {
-	mEntities.push_back(entity);
+	mEntities.push_back(pEntity);
 }
 
-void System::RemoveEntityFromSystem(Entity entity)
+void System::RemoveEntityFromSystem(Entity pEntity)
 {
 	/*for (auto it = mEntities.begin(); it != mEntities.end(); ++it) {
 		if (it->GetId() == entity.GetId()) {
@@ -21,8 +23,8 @@ void System::RemoveEntityFromSystem(Entity entity)
 		std::remove_if(
 			mEntities.begin(),
 			mEntities.end(),
-			[&entity](Entity other) {
-				return entity == other;
+			[&pEntity](Entity other) {
+				return pEntity == other;
 			}
 		),
 		mEntities.end());
@@ -40,15 +42,48 @@ const Signature& System::GetComponentSignature() const
 
 Entity Registry::CreateEntity()
 {
-	int entityId = mNumEntities++;
+	unsigned int entityId = mNumEntities++;
 	
 	Entity entity(entityId);
-	entitiesToBeAdded.insert(entity);
+	entity.mRegistry = this;
+	mEntitiesToBeAdded.insert(entity);
 	
-	LOG_INFO("Entity created with id" + std::to_string(entityId));
+	if (entityId >= mEntityComponentSignatures.size()) {
+		mEntityComponentSignatures.resize(entityId + 1);
+	}
+
+	LOG_INFO("Entity created with id " + std::to_string(entityId));
 	return entity;
 }
 
+void Registry::AddEntityToSystem(Entity pEntity)
+{
+	const auto entityId = pEntity.GetId();
+	const auto entityComponentSignaure = mEntityComponentSignatures[entityId];
+	// Loop all the Systems
+	for (auto& system : mSystems) {
+		const auto& systemComponentSignature = system.second->GetComponentSignature();
+		if ((entityComponentSignaure & systemComponentSignature) == systemComponentSignature) {
+			system.second->AddEntityToSystem(pEntity);
+		}
+	}
+}
+
+Registry::Registry()
+{
+	LOG_INFO("Registry created!");
+}
+Registry::~Registry()
+{
+	LOG_INFO("Registry deleted!");
+}
+
 void Registry::Update() {
+	for (auto entity : mEntitiesToBeAdded) {
+		AddEntityToSystem(entity);
+	}
+	mEntitiesToBeAdded.clear();
+	
+	mEntitiesToBeKilled.clear();
 
 }

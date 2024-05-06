@@ -8,10 +8,7 @@
 #include <unordered_map>
 #include <typeindex>
 #include <set>
-
-
-#include "../Logger/Logger.h"
-#include "../ECS/ECS.h"
+#include <memory>
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -20,4 +17,5 @@
 
 #include <glm/glm.hpp>
 
+#include "../Logger/Logger.h"
 #include "Base.h"

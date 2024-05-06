@@ -2,7 +2,7 @@
 
 #define ECHO2D_SUCCESS 0
 
-#define ECHO2D_FPS 60
+#define ECHO2D_FPS 30
 #define ECHO2D_MILLISECS_PER_FRAME 1000/ECHO2D_FPS
 
 #define ANSI_COLOR_GREY    "\033[1;30m"
@@ -14,3 +14,4 @@
 #define LOG_INFO(message) Logger::Info(message, __FILE__, __LINE__)
 #define LOG_WARN(message) Logger::Warning(message, __FILE__, __LINE__)
 #define LOG_ERROR(message) Logger::Error(message, __FILE__, __LINE__)
+

@@ -1,7 +1,9 @@
 #include "Game.h"
 
+
 EchoGame::EchoGame() : mIsRunning(false)
 {
+	mRegistry = std::make_unique<Registry>();
 	LOG_INFO("Game construction called");
 }
 
@@ -35,8 +37,8 @@ void EchoGame::Initialize()
 	}
 
 	mRenderer = SDL_CreateRenderer(
-		mWindow, 
-		-1, 
+		mWindow,
+		-1,
 		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
 	);
 
@@ -80,29 +82,44 @@ glm::vec2 position;
 glm::vec2 velocity;
 
 void EchoGame::Setup() {
+
+	mRegistry->AddSystem<MovementSystem>();
+	mRegistry->AddSystem<RenderSystem>();
+
 	//TODO: Initialize the GameObjects
-	position = glm::vec2(10.0, 20.0);
-	velocity = glm::vec2(100.0, 0.0);
+	Entity tank = mRegistry->CreateEntity();
+	Entity tank2 = mRegistry->CreateEntity();
+
+	tank.AddComponent<TranformComponent>(glm::vec2(10.0, 10.0), glm::vec2(1.0, 1.0), 0.0);
+	tank.AddComponent<RigidBodyComponent>(glm::vec2(30.0, 0.0));
+	tank.AddComponent<SpriteComponent>(20 , 20);
+
+	tank2.AddComponent<TranformComponent>(glm::vec2(10.0, 10.0), glm::vec2(1.0, 1.0), 0.0);
+	tank2.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 30.0));
+	tank2.AddComponent<SpriteComponent>(10, 100);
 }
 
 void EchoGame::Update()
 {
 	int timeToWait = ECHO2D_MILLISECS_PER_FRAME - (SDL_GetTicks() - mMillisecPreviousFrame);
-	if(timeToWait > 0)
+	if (timeToWait > 0)
 		SDL_Delay(timeToWait);
 
 	double deltaTime = (SDL_GetTicks() - mMillisecPreviousFrame) / 1000.0;
 	mMillisecPreviousFrame = SDL_GetTicks();
 
-	//TODO: Update game objects
+	mRegistry->GetSystem<MovementSystem>().Update(deltaTime);
+
+	mRegistry->Update();
 }
 
 void EchoGame::Render()
 {
 	SDL_SetRenderDrawColor(mRenderer, 21, 21, 21, 255);
-	SDL_RenderClear(mRenderer); 
+	SDL_RenderClear(mRenderer);
 	//TODO: Renderer all gameobjects
-	
+	mRegistry->GetSystem<RenderSystem>().Update(mRenderer);
+
 	SDL_RenderPresent(mRenderer);
 }
 

@@ -1,19 +1,26 @@
 #ifndef MOVEMENTSYSTEM_ECHO2D_H
 #define MOVEMENTSYSTEM_ECHO2D_H
 #include "../Core/Core.h"
+#include "../ECS/ECS.h"
+#include "../Components/TransformComponent.h"
+#include "../Components/RigidBodyComponent.h"
 
 class MovementSystem : public System {
 public:
 	MovementSystem() {
-		// TODO 
-		// RequiredComponent<TransformComponent>();
-		// RequiredComponent<...>();
+		RequireComponent<TranformComponent>();
+		RequireComponent<RigidBodyComponent>();
 	}
-	~MovementSystem();
-	void Update() {
+	~MovementSystem() {};
+	void Update(double deltaTime) {
 		// TODO
-		// Update entity position with you velocity
-		// All logic to do frame by frame
+		for (auto& entity : GetSystemEntities()) {
+			auto& transform = entity.GetComponent<TranformComponent>();
+			const auto rigdibody = entity.GetComponent<RigidBodyComponent>();
+
+			transform.mPosition.x += (rigdibody.mVelocity.x * deltaTime);
+			transform.mPosition.y += (rigdibody.mVelocity.y * deltaTime);
+		}
 	}
 };
 
