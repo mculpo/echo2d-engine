@@ -828,7 +828,13 @@
     <ClInclude Include="src\Events\CollisionEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Event\EventBus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\Event\Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\DamageSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1271,9 +1277,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Events\CollisionEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Event\Event.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

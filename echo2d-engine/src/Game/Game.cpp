@@ -5,6 +5,7 @@ EchoGame::EchoGame() : mIsRunning(false)
 {
 	mRegistry = std::make_unique<Registry>();
 	mAssetStore = std::make_unique<AssetStore>();
+	mEventBus = std::make_unique<EventBus>();
 	LOG_INFO("Game construction called");
 }
 
@@ -86,6 +87,7 @@ void EchoGame::LoadLevel(int level) {
 	mRegistry->AddSystem<MovementSystem>();
 	mRegistry->AddSystem<AnimationSystem>();
 	mRegistry->AddSystem<BoxColliderSystem>();
+	mRegistry->AddSystem<DamageSystem>();
 	mRegistry->AddSystem<RenderColliderDebugSystem>();
 	mRegistry->AddSystem<RenderSystem>();
 
@@ -157,11 +159,15 @@ void EchoGame::Update()
 	double deltaTime = (SDL_GetTicks() - mMillisecPreviousFrame) / 1000.0;
 	mMillisecPreviousFrame = SDL_GetTicks();
 
-	mRegistry->GetSystem<MovementSystem>().Update(deltaTime);
-	mRegistry->GetSystem<BoxColliderSystem>().Update();
-	mRegistry->GetSystem<AnimationSystem>().Update();
+	mEventBus->Reset();
+
+	mRegistry->GetSystem<DamageSystem>().SubscribeToEvents(mEventBus);
 
 	mRegistry->Update();
+
+	mRegistry->GetSystem<MovementSystem>().Update(deltaTime);
+	mRegistry->GetSystem<BoxColliderSystem>().Update(mEventBus);
+	mRegistry->GetSystem<AnimationSystem>().Update();
 }
 
 void EchoGame::Render()

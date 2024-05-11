@@ -12,8 +12,9 @@
 #include "../Systems/RenderSystem.h"
 #include "../Systems/AnimationSystem.h"
 #include "../Systems/BoxColliderSystem.h"
+#include "../Systems/DamageSystem.h"
 #include "../Systems/RenderColliderDebugSystem.h"
-#include "../Event/Event.h"
+#include "../Event/EventBus.h"
 
 class EchoGame {
 private:
@@ -23,7 +24,7 @@ private:
 	SDL_Renderer* mRenderer;
 	std::unique_ptr<Registry> mRegistry;
 	std::unique_ptr<AssetStore> mAssetStore;
-	std::unique_ptr<Event> mEvent;
+	std::unique_ptr<EventBus> mEventBus;
 public:
 	EchoGame();
 	~EchoGame();

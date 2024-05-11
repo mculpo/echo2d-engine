@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Event\Event.h" />
+    <ClInclude Include="src\Event\EventBus.h" />
     <ClInclude Include="src\Events\CollisionEvent.h" />
     <ClInclude Include="src\AssetStore\AssetStore.h" />
     <ClInclude Include="libs\glm\common.hpp" />
@@ -403,6 +404,7 @@
     <ClInclude Include="src\Game\Game.h" />
     <ClInclude Include="src\Systems\AnimationSystem.h" />
     <ClInclude Include="src\Systems\BoxColliderSystem.h" />
+    <ClInclude Include="src\Systems\DamageSystem.h" />
     <ClInclude Include="src\Systems\MovementSystem.h" />
     <ClInclude Include="src\Systems\RenderColliderDebugSystem.h" />
     <ClInclude Include="src\Systems\RenderSystem.h" />
@@ -548,7 +550,6 @@
     <None Include="SDL2_ttf.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Event\Event.cpp" />
     <ClCompile Include="src\Events\CollisionEvent.cpp" />
     <ClCompile Include="src\AssetStore\AssetStore.cpp" />
     <ClCompile Include="libs\glm\detail\glm.cpp" />

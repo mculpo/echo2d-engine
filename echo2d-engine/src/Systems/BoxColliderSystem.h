@@ -4,6 +4,8 @@
 #include "../ECS/ECS.h"
 #include "../Components/BoxColliderComponent.h"
 #include "../Components/TransformComponent.h"
+#include "../Events/CollisionEvent.h"
+#include "../Event/EventBus.h"
 
 class BoxColliderSystem : public System {
 public:
@@ -12,7 +14,7 @@ public:
 		RequireComponent<TranformComponent>();
 	}
 
-	void Update() {
+	void Update(std::unique_ptr<EventBus>& pEventBus) {
 		auto entities = GetSystemEntities();
 
 		for (auto i = entities.begin(); i != entities.end(); i++) {
@@ -32,6 +34,7 @@ public:
 
 				if (isCollision) {
 					//TODO: Event
+					pEventBus->InvokeEvent<CollisionEvent>(a, b);
 				}
 			}
 		}
