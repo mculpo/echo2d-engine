@@ -3,9 +3,9 @@
 #include "../Core/Core.h"
 
 struct RigidBodyComponent {
-	glm::vec2 mVelocity;
+	glm::vec2 velocity;
 	RigidBodyComponent(glm::vec2 pVelocity = glm::vec2(0.0, 0.0)) {
-		this->mVelocity = pVelocity;
+		this->velocity = pVelocity;
 	}
 };
 

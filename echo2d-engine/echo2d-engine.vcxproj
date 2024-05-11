@@ -134,6 +134,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Event\Event.h" />
+    <ClInclude Include="src\Events\CollisionEvent.h" />
+    <ClInclude Include="src\AssetStore\AssetStore.h" />
     <ClInclude Include="libs\glm\common.hpp" />
     <ClInclude Include="libs\glm\detail\compute_common.hpp" />
     <ClInclude Include="libs\glm\detail\compute_vector_relational.hpp" />
@@ -388,6 +391,8 @@
     <ClInclude Include="libs\lua\luaconf.h" />
     <ClInclude Include="libs\lua\lualib.h" />
     <ClInclude Include="libs\sol\sol.hpp" />
+    <ClInclude Include="src\Components\AnimationComponent.h" />
+    <ClInclude Include="src\Components\BoxColliderComponent.h" />
     <ClInclude Include="src\Components\RigidBodyComponent.h" />
     <ClInclude Include="src\Components\SpriteComponent.h" />
     <ClInclude Include="src\Components\TransformComponent.h" />
@@ -396,7 +401,10 @@
     <ClInclude Include="src\Core\Base.h" />
     <ClInclude Include="src\Core\Core.h" />
     <ClInclude Include="src\Game\Game.h" />
+    <ClInclude Include="src\Systems\AnimationSystem.h" />
+    <ClInclude Include="src\Systems\BoxColliderSystem.h" />
     <ClInclude Include="src\Systems\MovementSystem.h" />
+    <ClInclude Include="src\Systems\RenderColliderDebugSystem.h" />
     <ClInclude Include="src\Systems\RenderSystem.h" />
   </ItemGroup>
   <ItemGroup>
@@ -540,6 +548,9 @@
     <None Include="SDL2_ttf.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Event\Event.cpp" />
+    <ClCompile Include="src\Events\CollisionEvent.cpp" />
+    <ClCompile Include="src\AssetStore\AssetStore.cpp" />
     <ClCompile Include="libs\glm\detail\glm.cpp" />
     <ClCompile Include="libs\imgui\imgui.cpp" />
     <ClCompile Include="libs\imgui\imgui_demo.cpp" />

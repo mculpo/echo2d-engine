@@ -1,14 +1,19 @@
 #pragma once
+#include <cstdlib>
 #include <iostream>
 #include <chrono>
 #include <ctime>
 #include <string>
 #include <bitset>
 #include <vector>
+#include <map>
 #include <unordered_map>
 #include <typeindex>
 #include <set>
 #include <memory>
+#include <fstream>
+#include <algorithm>
+#include <queue>
 
 #include <SDL.h>
 #include <SDL_image.h>

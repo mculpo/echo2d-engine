@@ -49,6 +49,7 @@ public:
 	Entity(const Entity& pEntity) = default;
 	~Entity() {};
 	int GetId() const;
+	void Destroy();
 	Entity& operator =(const Entity& other) = default;
 	bool operator ==(const Entity& pEntity) const { return mId == pEntity.GetId(); }
 	bool operator !=(const Entity& pEntity) const { return mId != pEntity.GetId(); }
@@ -165,6 +166,7 @@ private:
 	std::set<Entity> mEntitiesToBeAdded;
 	std::set<Entity> mEntitiesToBeKilled;
 
+	std::deque<int> mFreeIds;
 public:
 	Registry();
 	~Registry();
@@ -198,7 +200,8 @@ public:
 	TSystem& GetSystem() const;
 
 	void AddEntityToSystem(Entity pEntity);
-	//void KillEntity();
+	void RemoveEntityFromSystem(Entity pEntity);
+	void DestroyEntity(Entity pEntity);
 };
 
 /*
@@ -238,7 +241,7 @@ inline void Registry::AddComponent(Entity pEntity, TArgs && ...pArgs)
 	// finally, change the component signature of the entity and set the component id on the bitset to 1
 	mEntityComponentSignatures[entityId].set(componentId);
 
-	LOG_INFO("Component id " + std::to_string(componentId) + " was added to entity id " + std::to_string(entityId));
+	//LOG_INFO("Component id " + std::to_string(componentId) + " was added to entity id " + std::to_string(entityId));
 }
 
 template<typename TComponent>

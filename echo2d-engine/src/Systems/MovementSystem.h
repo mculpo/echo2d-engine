@@ -18,8 +18,8 @@ public:
 			auto& transform = entity.GetComponent<TranformComponent>();
 			const auto rigdibody = entity.GetComponent<RigidBodyComponent>();
 
-			transform.mPosition.x += (rigdibody.mVelocity.x * deltaTime);
-			transform.mPosition.y += (rigdibody.mVelocity.y * deltaTime);
+			transform.position.x += (rigdibody.velocity.x * deltaTime);
+			transform.position.y += (rigdibody.velocity.y * deltaTime);
 		}
 	}
 };

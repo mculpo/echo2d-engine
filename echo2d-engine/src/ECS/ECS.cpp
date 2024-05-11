@@ -6,6 +6,11 @@ int Entity::GetId() const {
 	return mId;
 }
 
+void Entity::Destroy()
+{
+	mRegistry->DestroyEntity(*this);
+}
+
 void System::AddEntityToSystem(Entity pEntity)
 {
 	mEntities.push_back(pEntity);
@@ -42,17 +47,23 @@ const Signature& System::GetComponentSignature() const
 
 Entity Registry::CreateEntity()
 {
-	unsigned int entityId = mNumEntities++;
+	unsigned int entityId;
 	
+	if (mFreeIds.empty()) {
+		entityId = mNumEntities++;
+		if (entityId >= mEntityComponentSignatures.size()) {
+			mEntityComponentSignatures.resize(entityId + 1);
+		}
+	}
+	else {
+		entityId = mFreeIds.front();
+		mFreeIds.pop_front();
+	}
+
 	Entity entity(entityId);
 	entity.mRegistry = this;
 	mEntitiesToBeAdded.insert(entity);
 	
-	if (entityId >= mEntityComponentSignatures.size()) {
-		mEntityComponentSignatures.resize(entityId + 1);
-	}
-
-	LOG_INFO("Entity created with id " + std::to_string(entityId));
 	return entity;
 }
 
@@ -69,6 +80,18 @@ void Registry::AddEntityToSystem(Entity pEntity)
 	}
 }
 
+void Registry::RemoveEntityFromSystem(Entity pEntity)
+{
+	for (auto system : mSystems) {
+		system.second->RemoveEntityFromSystem(pEntity);
+	}
+}
+
+void Registry::DestroyEntity(Entity pEntity)
+{
+	mEntitiesToBeKilled.insert(pEntity);
+}
+
 Registry::Registry()
 {
 	LOG_INFO("Registry created!");
@@ -83,7 +106,12 @@ void Registry::Update() {
 		AddEntityToSystem(entity);
 	}
 	mEntitiesToBeAdded.clear();
-	
+	for (auto entity : mEntitiesToBeKilled) {
+		RemoveEntityFromSystem(entity);
+		mEntityComponentSignatures[entity.GetId()].reset();
+		mFreeIds.push_back(entity.GetId());
+	}
+
 	mEntitiesToBeKilled.clear();
 
 }
