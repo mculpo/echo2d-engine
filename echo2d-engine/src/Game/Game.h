@@ -13,7 +13,9 @@
 #include "../Systems/AnimationSystem.h"
 #include "../Systems/BoxColliderSystem.h"
 #include "../Systems/DamageSystem.h"
+#include "../Systems/KeyboardControlSystem.h"
 #include "../Systems/RenderColliderDebugSystem.h"
+#include "../Systems/RenderSpriteDebugSystem.h"
 #include "../Event/EventBus.h"
 
 class EchoGame {

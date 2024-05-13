@@ -4,7 +4,6 @@
 #include "../ECS/ECS.h"
 #include "../Components/BoxColliderComponent.h"
 #include "../Components/TransformComponent.h"
-#include "../AssetStore/AssetStore.h"
 
 
 class RenderColliderDebugSystem : public System {
@@ -24,8 +23,8 @@ public:
 			SDL_Rect rect;
 			rect.x = static_cast<int>(transform.position.x + collider.offset.x);
 			rect.y = static_cast<int>(transform.position.y + collider.offset.y);
-			rect.w = static_cast<int>(collider.width);
-			rect.h = static_cast<int>(collider.height);
+			rect.w = static_cast<int>(collider.width * transform.scale.x);
+			rect.h = static_cast<int>(collider.height * transform.scale.y);
 
 			// Desenhando o retângulo
 			SDL_RenderDrawRect(pRenderer, &rect);

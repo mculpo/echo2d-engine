@@ -74,8 +74,8 @@ void EchoGame::ProcessingInput()
 		case SDL_KEYDOWN:
 			if (sdlEvent.key.keysym.sym == SDLK_ESCAPE) {
 				mIsRunning = false;
-				break;
 			}
+			mEventBus->InvokeEvent<KeyPressedEvent>(sdlEvent.key.keysym.sym);
 		}
 	}
 }
@@ -89,7 +89,9 @@ void EchoGame::LoadLevel(int level) {
 	mRegistry->AddSystem<BoxColliderSystem>();
 	mRegistry->AddSystem<DamageSystem>();
 	mRegistry->AddSystem<RenderColliderDebugSystem>();
+	mRegistry->AddSystem<RenderSpriteDebugSystem>();
 	mRegistry->AddSystem<RenderSystem>();
+	mRegistry->AddSystem<KeyboardControlSystem>();
 
 	mAssetStore->AddTexture(mRenderer, "tank-image", "./assets/images/tank-panther-right.png");
 	mAssetStore->AddTexture(mRenderer, "truck-image", "./assets/images/truck-ford-left.png");
@@ -131,20 +133,20 @@ void EchoGame::LoadLevel(int level) {
 	radar.AddComponent<TranformComponent>(glm::vec2(mWindowWidth - 74.0, mWindowHeight - 74.0), glm::vec2(1, 1), 0.0);
 	radar.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
 	radar.AddComponent<SpriteComponent>("radar-image", 64, 64, 1);
-	radar.AddComponent<AnimationComponent>(8, 2, true);
+	radar.AddComponent<AnimationComponent>(8, 3, true);
 
 
 	Entity tank = mRegistry->CreateEntity();
-	tank.AddComponent<TranformComponent>(glm::vec2(10.0, 10.0), glm::vec2(1.5, 1.5), 0.0);
+	tank.AddComponent<TranformComponent>(glm::vec2(10.0, 10.0), glm::vec2(2.0, 2.0), 0.0);
 	tank.AddComponent<RigidBodyComponent>(glm::vec2(25.0, 0.0));
 	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1);
-	tank.AddComponent<BoxColliderComponent>(32, 32);
+	tank.AddComponent<BoxColliderComponent>(25, 25, glm::vec2(7.0, 7.0));
 
 	Entity tank2 = mRegistry->CreateEntity();
-	tank2.AddComponent<TranformComponent>(glm::vec2(150.0, 10.0), glm::vec2(1.5, 1.5), 0.0);
+	tank2.AddComponent<TranformComponent>(glm::vec2(450.0, 10.0), glm::vec2(2.0, 2.0), 0.0);
 	tank2.AddComponent<RigidBodyComponent>(glm::vec2(-25.0, 0));
 	tank2.AddComponent<SpriteComponent>("truck-image", 32, 32, 1);
-	tank2.AddComponent<BoxColliderComponent>(32, 32);
+	tank2.AddComponent<BoxColliderComponent>(25, 25, glm::vec2(7.0, 7.0));
 }
 void EchoGame::Setup() {
 	LoadLevel();
@@ -162,6 +164,7 @@ void EchoGame::Update()
 	mEventBus->Reset();
 
 	mRegistry->GetSystem<DamageSystem>().SubscribeToEvents(mEventBus);
+	mRegistry->GetSystem<KeyboardControlSystem>().SubscribeToEvents(mEventBus);
 
 	mRegistry->Update();
 
@@ -177,6 +180,7 @@ void EchoGame::Render()
 	//TODO: Renderer all gameobjects
 	mRegistry->GetSystem<RenderSystem>().Update(mRenderer, mAssetStore);
 	mRegistry->GetSystem<RenderColliderDebugSystem>().Update(mRenderer);
+	mRegistry->GetSystem<RenderSpriteDebugSystem>().Update(mRenderer);
 
 	SDL_RenderPresent(mRenderer);
 }

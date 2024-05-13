@@ -837,6 +837,15 @@
     <ClInclude Include="src\Systems\DamageSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Events\KeyPressedEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\KeyboardControlSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\RenderSpriteDebugSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glm\detail\func_common.inl">
@@ -1274,9 +1283,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\AssetStore\AssetStore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Events\CollisionEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

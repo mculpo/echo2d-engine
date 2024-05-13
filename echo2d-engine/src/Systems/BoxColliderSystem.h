@@ -29,8 +29,8 @@ public:
 				auto bTransform = b.GetComponent<TranformComponent>();
 				auto bCollider = b.GetComponent<BoxColliderComponent>();
 
-				bool isCollision = CheckAABBCollision(	aTransform.position.x, aTransform.position.y, aCollider.width, aCollider.height,
-														bTransform.position.x, bTransform.position.y, bCollider.width, bCollider.height);
+				bool isCollision = CheckAABBCollision(	aTransform.position.x, aTransform.position.y, aCollider.width * aTransform.scale.x, aCollider.height * aTransform.scale.y,
+														bTransform.position.x, bTransform.position.y, bCollider.width * bTransform.scale.x, bCollider.height * bTransform.scale.y);
 
 				if (isCollision) {
 					//TODO: Event
