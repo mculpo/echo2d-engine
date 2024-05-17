@@ -12,7 +12,7 @@ public:
 		RequireComponent<BoxColliderComponent>();
 	}
 
-	void Update(SDL_Renderer* pRenderer) {
+	void Update(SDL_Renderer* pRenderer, SDL_Rect pCamera) {
 		SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 255); // Vermelho
 		for (auto entity : GetSystemEntities()) {
 
@@ -20,8 +20,8 @@ public:
 			auto& sprite = entity.GetComponent<SpriteComponent>();
 
 			SDL_Rect rect;
-			rect.x = static_cast<int>(transform.position.x + sprite.srcRect.x);
-			rect.y = static_cast<int>(transform.position.y + sprite.srcRect.y);
+			rect.x = static_cast<int>(transform.position.x + sprite.srcRect.x - pCamera.x);
+			rect.y = static_cast<int>(transform.position.y + sprite.srcRect.y - pCamera.y);
 			rect.w = static_cast<int>(sprite.srcRect.w * transform.scale.x);
 			rect.h = static_cast<int>(sprite.srcRect.h * transform.scale.y);
 

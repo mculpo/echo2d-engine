@@ -134,6 +134,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\CameraFollowComponent.h" />
+    <ClInclude Include="src\Components\KeyboardControlComponent.h" />
     <ClInclude Include="src\Events\KeyPressedEvent.h" />
     <ClInclude Include="src\Event\Event.h" />
     <ClInclude Include="src\Event\EventBus.h" />
@@ -402,9 +404,10 @@
     <ClInclude Include="src\Logger\Logger.h" />
     <ClInclude Include="src\Core\Base.h" />
     <ClInclude Include="src\Core\Core.h" />
-    <ClInclude Include="src\Game\Game.h" />
+    <ClInclude Include="src\Game\EchoGame.h" />
     <ClInclude Include="src\Systems\AnimationSystem.h" />
     <ClInclude Include="src\Systems\BoxColliderSystem.h" />
+    <ClInclude Include="src\Systems\CameraMovementSystem.h" />
     <ClInclude Include="src\Systems\DamageSystem.h" />
     <ClInclude Include="src\Systems\KeyboardControlSystem.h" />
     <ClInclude Include="src\Systems\MovementSystem.h" />
@@ -561,7 +564,7 @@
     <ClCompile Include="libs\imgui\imgui_sdl.cpp" />
     <ClCompile Include="libs\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\ECS\ECS.cpp" />
-    <ClCompile Include="src\Game\Game.cpp" />
+    <ClCompile Include="src\Game\EchoGame.cpp" />
     <ClCompile Include="src\Logger\Logger.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>

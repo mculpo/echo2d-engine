@@ -18,12 +18,6 @@ void System::AddEntityToSystem(Entity pEntity)
 
 void System::RemoveEntityFromSystem(Entity pEntity)
 {
-	/*for (auto it = mEntities.begin(); it != mEntities.end(); ++it) {
-		if (it->GetId() == entity.GetId()) {
-			mEntities.erase(it);
-			break;
-		}
-	}*/
 	mEntities.erase(
 		std::remove_if(
 			mEntities.begin(),

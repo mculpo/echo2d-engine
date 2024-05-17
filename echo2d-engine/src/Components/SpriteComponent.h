@@ -7,10 +7,12 @@ struct SpriteComponent {
 	int zIndex;
 	SDL_Rect srcRect;
 	SDL_RendererFlip flip;
-	SpriteComponent(std::string pTexture = "", int pWidth = 0, int pHeight = 0, int pZIndex = 0, int srcRectX = 0, int srcRectY = 0, SDL_RendererFlip pFlip = SDL_FLIP_NONE) {
+	bool isStatic;
+	SpriteComponent(std::string pTexture = "", int pWidth = 0, int pHeight = 0, int pZIndex = 0, bool pIsStatic = false ,int srcRectX = 0, int srcRectY = 0, SDL_RendererFlip pFlip = SDL_FLIP_NONE) {
 		texture = pTexture;
 		srcRect = { srcRectX, srcRectY, pWidth, pHeight };
 		zIndex = pZIndex;
+		isStatic = pIsStatic;
 		flip = pFlip;
 	};
 };

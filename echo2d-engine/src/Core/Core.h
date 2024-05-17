@@ -22,6 +22,4 @@
 
 #include <glm/glm.hpp>
 
-#include "../Logger/Logger.h"
-#include "../ECS/ECS.h"
 #include "Base.h"

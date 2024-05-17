@@ -13,7 +13,7 @@ public:
 		RequireComponent<SpriteComponent>();
 	}
 	~RenderSystem() {};
-	void Update(SDL_Renderer* pRenderer, std::unique_ptr<AssetStore>& pAssetStore) {
+	void Update(SDL_Renderer* pRenderer, std::unique_ptr<AssetStore>& pAssetStore, SDL_Rect& pCamera) {
 
 		struct RenderableEntity {
 			TranformComponent tranformComponent;
@@ -41,9 +41,12 @@ public:
 			const auto transform = entity.tranformComponent;
 			const auto sprite = entity.spriteComponent;
 
+			auto _posX = sprite.isStatic ? transform.position.x : transform.position.x - pCamera.x;
+			auto _posY = sprite.isStatic ? transform.position.y : transform.position.y - pCamera.y;
+
 			SDL_Rect dstRect = {
-				static_cast<int> (transform.position.x),
-				static_cast<int> (transform.position.y),
+				static_cast<int> (_posX),
+				static_cast<int> (_posY),
 				static_cast<int> (sprite.srcRect.w * transform.scale.x),
 				static_cast<int> (sprite.srcRect.h * transform.scale.y)
 			};
