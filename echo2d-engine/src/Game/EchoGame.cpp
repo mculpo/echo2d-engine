@@ -5,15 +5,20 @@
 #include "../Components/AnimationComponent.h"
 #include "../Components/BoxColliderComponent.h"
 #include "../Components/CameraFollowComponent.h"
+#include "../Components/ProjectileEmmiterComponent.h"
 #include "../Systems/MovementSystem.h"
 #include "../Systems/RenderSystem.h"
 #include "../Systems/AnimationSystem.h"
-#include "../Systems/BoxColliderSystem.h"
+#include "../Systems/ColliderSystem.h"
 #include "../Systems/DamageSystem.h"
 #include "../Systems/KeyboardControlSystem.h"
 #include "../Systems/RenderColliderDebugSystem.h"
 #include "../Systems/RenderSpriteDebugSystem.h"
 #include "../Systems/CameraMovementSystem.h"
+#include "../Systems/ProjectileEmmiterSystem.h"
+#include "../Systems/ProjectileLifecycleSystem.h"
+#include "../Components/HealthComponent.h"
+
 int EchoGame::windowWidth;
 int EchoGame::windowHeight;
 int EchoGame::mapWidth;
@@ -113,19 +118,22 @@ glm::vec2 velocity;
 void EchoGame::LoadLevel(int level) {
 	mRegistry->AddSystem<MovementSystem>();
 	mRegistry->AddSystem<AnimationSystem>();
-	mRegistry->AddSystem<BoxColliderSystem>();
+	mRegistry->AddSystem<ColliderSystem>();
 	mRegistry->AddSystem<DamageSystem>();
 	mRegistry->AddSystem<RenderColliderDebugSystem>();
 	mRegistry->AddSystem<RenderSpriteDebugSystem>();
 	mRegistry->AddSystem<RenderSystem>();
 	mRegistry->AddSystem<KeyboardControlSystem>();
 	mRegistry->AddSystem<CameraMovementSystem>();
+	mRegistry->AddSystem<ProjectileEmmiterSystem>();
+	mRegistry->AddSystem<ProjectileLifecycleSystem>();
 
 	mAssetStore->AddTexture(mRenderer, "tank-image", "./assets/images/tank-panther-right.png");
 	mAssetStore->AddTexture(mRenderer, "truck-image", "./assets/images/truck-ford-left.png");
 	mAssetStore->AddTexture(mRenderer, "chopper-image", "./assets/images/chopper-spritesheet.png");
 	mAssetStore->AddTexture(mRenderer, "radar-image", "./assets/images/radar.png");
 	mAssetStore->AddTexture(mRenderer, "tile-map", "./assets/tilemaps/jungle.png");
+	mAssetStore->AddTexture(mRenderer, "bullet-image", "./assets/images/bullet.png");
 
 	int tileSize = 32;
 	double tileScale = 2.0;
@@ -158,27 +166,33 @@ void EchoGame::LoadLevel(int level) {
 	chopper.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
 	chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 1);
 	chopper.AddComponent<AnimationComponent>(2, 20, true);
+	chopper.AddComponent<ProjectileEmmiterComponent>(glm::vec2(1500.0, 1500.0), 0, 5000, 0, true);
 	chopper.AddComponent<KeyboardControlComponent>(glm::vec2(120, 120));
 	chopper.AddComponent<CameraFollowComponent>();
+	chopper.AddComponent<HealthComponent>(100);
 
 	Entity radar = mRegistry->CreateEntity();
 	radar.AddComponent<TranformComponent>(glm::vec2(windowWidth - 74.0, windowHeight - 74.0), glm::vec2(1, 1), 0.0);
-	radar.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
+	//radar.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
 	radar.AddComponent<SpriteComponent>("radar-image", 64, 64, 1, true);
 	radar.AddComponent<AnimationComponent>(8, 3, true);
 
 
 	Entity tank = mRegistry->CreateEntity();
 	tank.AddComponent<TranformComponent>(glm::vec2(10.0, 10.0), glm::vec2(2.0, 2.0), 0.0);
-	tank.AddComponent<RigidBodyComponent>(glm::vec2(25.0, 0.0));
+	tank.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
 	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1);
 	tank.AddComponent<BoxColliderComponent>(25, 25, glm::vec2(7.0, 7.0));
+	tank.AddComponent<ProjectileEmmiterComponent>(glm::vec2(100.0,0.0), 1000, 3000, 0, false);
+	tank.AddComponent<HealthComponent>(100);
 
 	Entity tank2 = mRegistry->CreateEntity();
 	tank2.AddComponent<TranformComponent>(glm::vec2(450.0, 10.0), glm::vec2(2.0, 2.0), 0.0);
-	tank2.AddComponent<RigidBodyComponent>(glm::vec2(25.0, 0));
+	tank2.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0));
 	tank2.AddComponent<SpriteComponent>("truck-image", 32, 32, 1);
 	tank2.AddComponent<BoxColliderComponent>(25, 25, glm::vec2(7.0, 7.0));
+	tank2.AddComponent<ProjectileEmmiterComponent>(glm::vec2(0.0, 100.0), 1000, 4000, 0, false);
+	tank2.AddComponent<HealthComponent>(100);
 }
 void EchoGame::Setup() {
 	LoadLevel();
@@ -198,10 +212,13 @@ void EchoGame::Update()
 
 	mRegistry->GetSystem<KeyboardControlSystem>().SubscribeToEvents(mEventBus);
 	mRegistry->GetSystem<DamageSystem>().SubscribeToEvents(mEventBus);
+	mRegistry->GetSystem<ProjectileEmmiterSystem>().SubscribeToEvents(mEventBus);
 
 	mRegistry->GetSystem<MovementSystem>().Update(deltaTime);
-	mRegistry->GetSystem<BoxColliderSystem>().Update(mEventBus);
 	mRegistry->GetSystem<AnimationSystem>().Update();
+	mRegistry->GetSystem<ColliderSystem>().Update(mEventBus);
+	mRegistry->GetSystem<ProjectileEmmiterSystem>().Update(mRegistry);
+	mRegistry->GetSystem<ProjectileLifecycleSystem>().Update();
 	mRegistry->GetSystem<CameraMovementSystem>().Update(mCamera);
 }
 

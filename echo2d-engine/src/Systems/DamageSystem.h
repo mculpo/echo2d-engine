@@ -1,4 +1,3 @@
-#include "../Events/CollisionEvent.h"
 
 #ifndef DAMAGESYSTEM_ECHO2D_h
 #define DAMAGESYSTEM_ECHO2D_h
@@ -6,6 +5,7 @@
 #include "../ECS/ECS.h"
 #include "../Event/EventBus.h"
 #include "../Components/BoxColliderComponent.h"
+#include "../Events/CollisionEvent.h"
 
 class DamageSystem : public System {
 public:
@@ -24,8 +24,8 @@ public:
 			" and " + 
 			std::to_string(pEvent.b.GetId())
 		);
-		pEvent.a.Destroy();
-		pEvent.b.Destroy();
+		//pEvent.a.Destroy();
+		//pEvent.b.Destroy();
 	}
 
 	void Update() {

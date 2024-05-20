@@ -7,9 +7,9 @@
 #include "../Events/CollisionEvent.h"
 #include "../Event/EventBus.h"
 
-class BoxColliderSystem : public System {
+class ColliderSystem : public System {
 public:
-	BoxColliderSystem () {
+	ColliderSystem() {
 		RequireComponent<BoxColliderComponent>();
 		RequireComponent<TranformComponent>();
 	}

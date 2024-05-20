@@ -46,8 +46,6 @@ public:
 				rigidbody.velocity = VEC2_LEFT * keyboard.velocityObject;
 				sprite.srcRect.y = sprite.srcRect.h * 3;
 				break;
-			default:
-				rigidbody.velocity = VEC2_ZERO;
 			}
 		}
 
