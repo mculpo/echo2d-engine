@@ -50,6 +50,12 @@ public:
 	~Entity() {};
 	int GetId() const;
 	void Destroy();
+
+	void Tag(const std::string& pTag);
+	bool HasTag(const std::string& pTag) const;
+	void Group(const std::string& pGroup);
+	bool BelongsToGroup(const std::string& pGroup) const;
+
 	Entity& operator =(const Entity& other) = default;
 	bool operator ==(const Entity& pEntity) const { return mId == pEntity.GetId(); }
 	bool operator !=(const Entity& pEntity) const { return mId != pEntity.GetId(); }
@@ -150,6 +156,7 @@ public:
 class Registry {
 private:
 	int mNumEntities = 0;
+
 	// Vector of component pools
 	// Each pool constains all the data for a certain component type
 	// [Vector index = component type id] , [Pool index = entity id]
@@ -166,7 +173,13 @@ private:
 	std::set<Entity> mEntitiesToBeAdded;
 	std::set<Entity> mEntitiesToBeKilled;
 
-	std::deque<int> mFreeIds;
+	std::unordered_map<std::string, Entity> mEntityPerTag;
+	std::unordered_map<int, std::string> mTagPerEntity;
+
+	std::unordered_map<std::string, std::set<Entity>> mEntitiesPerGroup;
+	std::unordered_map<int, std::string> mGroupPerEntities;
+
+	std::deque<int> mFreeIds; 
 public:
 	Registry();
 	~Registry();
@@ -202,6 +215,17 @@ public:
 	void AddEntityToSystem(Entity pEntity);
 	void RemoveEntityFromSystem(Entity pEntity);
 	void DestroyEntity(Entity pEntity);
+
+	void TagEntity(Entity pEntity, const std::string& pTag);
+	bool EntityHasTag(Entity pEntity, const std::string& pTag) const;
+	Entity GetEntityByTag(const std::string& pTag) const;
+	void RemoveEntityTag(Entity pEntity);
+
+
+	void GroupEntity(Entity pEntity, const std::string& pGroup);
+	bool EntityBelongsToGroup(Entity pEntity, const std::string& pGroup) const;
+	std::vector<Entity> GetEntitiesByGroup(const std::string& pGroup) const;
+	void RemoveEntityGroup(Entity pEntity);
 };
 
 /*

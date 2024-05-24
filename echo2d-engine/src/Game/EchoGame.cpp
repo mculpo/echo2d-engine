@@ -152,6 +152,7 @@ void EchoGame::LoadLevel(int level) {
 			mapFile.ignore();
 
 			Entity map = mRegistry->CreateEntity();
+			map.Group("tiles");
 			map.AddComponent<TranformComponent>(glm::vec2(x * (tileScale * tileSize), y * (tileScale * tileSize)), glm::vec2(tileScale, tileScale), 0.0);
 			map.AddComponent<SpriteComponent>("tile-map", tileSize, tileSize, 0, false, srcRectX, srcRectY);
 		}
@@ -162,11 +163,13 @@ void EchoGame::LoadLevel(int level) {
 
 	//TODO: Initialize the GameObjects
 	Entity chopper = mRegistry->CreateEntity();
+	chopper.Tag("player");
 	chopper.AddComponent<TranformComponent>(glm::vec2(10.0, 10.0), glm::vec2(2, 2), 0.0);
 	chopper.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
 	chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 1);
 	chopper.AddComponent<AnimationComponent>(2, 20, true);
-	chopper.AddComponent<ProjectileEmmiterComponent>(glm::vec2(1500.0, 1500.0), 0, 5000, 0, true);
+	chopper.AddComponent<BoxColliderComponent>(32,32);
+	chopper.AddComponent<ProjectileEmmiterComponent>(glm::vec2(500.0, 500.0), 0, 5000, 40, true);
 	chopper.AddComponent<KeyboardControlComponent>(glm::vec2(120, 120));
 	chopper.AddComponent<CameraFollowComponent>();
 	chopper.AddComponent<HealthComponent>(100);
@@ -179,19 +182,21 @@ void EchoGame::LoadLevel(int level) {
 
 
 	Entity tank = mRegistry->CreateEntity();
-	tank.AddComponent<TranformComponent>(glm::vec2(10.0, 10.0), glm::vec2(2.0, 2.0), 0.0);
+	tank.Group("enemies");
+	tank.AddComponent<TranformComponent>(glm::vec2(100.0, 10.0), glm::vec2(2.0, 2.0), 0.0);
 	tank.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
 	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1);
 	tank.AddComponent<BoxColliderComponent>(25, 25, glm::vec2(7.0, 7.0));
-	tank.AddComponent<ProjectileEmmiterComponent>(glm::vec2(100.0,0.0), 1000, 3000, 0, false);
+	tank.AddComponent<ProjectileEmmiterComponent>(glm::vec2(100.0,0.0), 1000, 3000, 10, false);
 	tank.AddComponent<HealthComponent>(100);
 
 	Entity tank2 = mRegistry->CreateEntity();
-	tank2.AddComponent<TranformComponent>(glm::vec2(450.0, 10.0), glm::vec2(2.0, 2.0), 0.0);
+	tank2.Group("enemies");
+	tank2.AddComponent<TranformComponent>(glm::vec2(650.0, 10.0), glm::vec2(2.0, 2.0), 0.0);
 	tank2.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0));
 	tank2.AddComponent<SpriteComponent>("truck-image", 32, 32, 1);
 	tank2.AddComponent<BoxColliderComponent>(25, 25, glm::vec2(7.0, 7.0));
-	tank2.AddComponent<ProjectileEmmiterComponent>(glm::vec2(0.0, 100.0), 1000, 4000, 0, false);
+	tank2.AddComponent<ProjectileEmmiterComponent>(glm::vec2(0.0, 100.0), 1000, 4000, 10, false);
 	tank2.AddComponent<HealthComponent>(100);
 }
 void EchoGame::Setup() {
