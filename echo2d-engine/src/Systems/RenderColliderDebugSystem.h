@@ -1,7 +1,6 @@
 #ifndef RENDERCOLLIDERDEBUGSYSTEM_ECHO2D_H
 #define RENDERCOLLIDERDEBUGSYSTEM_ECHO2D_H
 #include "../Core/Core.h"
-#include "../ECS/ECS.h"
 #include "../Components/BoxColliderComponent.h"
 #include "../Components/TransformComponent.h"
 
@@ -9,7 +8,7 @@
 class RenderColliderDebugSystem : public System {
 public:
 	RenderColliderDebugSystem() {
-		RequireComponent<TranformComponent>();
+		RequireComponent<TransformComponent>();
 		RequireComponent<BoxColliderComponent>();
 	}
 
@@ -17,7 +16,7 @@ public:
 		SDL_SetRenderDrawColor(pRenderer, 0, 255, 0, 255); // Verde
 		for (auto entity : GetSystemEntities()) {
 
-			auto& transform = entity.GetComponent<TranformComponent>();
+			auto& transform = entity.GetComponent<TransformComponent>();
 			auto& collider = entity.GetComponent<BoxColliderComponent>();
 
 			SDL_Rect rect;

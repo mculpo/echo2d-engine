@@ -870,6 +870,15 @@
     <ClInclude Include="src\Systems\ProjectileLifecycleSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Components\TextComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\RenderTextSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\RenderHealthBarSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glm\detail\func_common.inl">
@@ -1386,5 +1395,6 @@
   <ItemGroup>
     <Font Include="assets\fonts\charriot.ttf" />
     <Font Include="assets\fonts\arial.ttf" />
+    <Font Include="assets\fonts\pico8.ttf" />
   </ItemGroup>
 </Project>

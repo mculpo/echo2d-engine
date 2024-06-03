@@ -7,7 +7,7 @@
 class RenderSpriteDebugSystem : public System {
 public:
 	RenderSpriteDebugSystem() {
-		RequireComponent<TranformComponent>();
+		RequireComponent<TransformComponent>();
 		RequireComponent<SpriteComponent>();
 		RequireComponent<BoxColliderComponent>();
 	}
@@ -16,7 +16,7 @@ public:
 		SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 255); // Vermelho
 		for (auto entity : GetSystemEntities()) {
 
-			auto& transform = entity.GetComponent<TranformComponent>();
+			auto& transform = entity.GetComponent<TransformComponent>();
 			auto& sprite = entity.GetComponent<SpriteComponent>();
 
 			SDL_Rect rect;

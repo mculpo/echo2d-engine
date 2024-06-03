@@ -8,14 +8,14 @@
 class MovementSystem : public System {
 public:
 	MovementSystem() {
-		RequireComponent<TranformComponent>();
+		RequireComponent<TransformComponent>();
 		RequireComponent<RigidBodyComponent>();
 	}
 	~MovementSystem() {};
 	void Update(double deltaTime) {
 		// TODO
 		for (auto& entity : GetSystemEntities()) {
-			auto& transform = entity.GetComponent<TranformComponent>();
+			auto& transform = entity.GetComponent<TransformComponent>();
 			const auto rigdibody = entity.GetComponent<RigidBodyComponent>();
 
 			transform.position.x += (rigdibody.velocity.x * deltaTime);

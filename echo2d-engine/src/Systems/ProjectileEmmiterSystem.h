@@ -16,7 +16,7 @@ class ProjectileEmmiterSystem : public System {
 public:
 	ProjectileEmmiterSystem() {
 		RequireComponent<ProjectileEmmiterComponent>();
-		RequireComponent<TranformComponent>();
+		RequireComponent<TransformComponent>();
 	}
 
 	void SubscribeToEvents(std::unique_ptr<EventBus>& pEventBus) {
@@ -28,7 +28,7 @@ public:
 			for (auto entity : GetSystemEntities()) {
 				if (entity.HasComponent<CameraFollowComponent>()) {
 					const auto projectileEmmiter = entity.GetComponent<ProjectileEmmiterComponent>();
-					const auto transform = entity.GetComponent<TranformComponent>();
+					const auto transform = entity.GetComponent<TransformComponent>();
 					const auto rigidbody = entity.GetComponent<RigidBodyComponent>();
 
 					glm::vec2 projectilePosition = transform.position;
@@ -51,7 +51,7 @@ public:
 
 					Entity projectile = entity.mRegistry->CreateEntity();
 					projectile.Group("projectiles");
-					projectile.AddComponent<TranformComponent>(projectilePosition, glm::vec2(1.0, 1.0), 0.0);
+					projectile.AddComponent<TransformComponent>(projectilePosition, glm::vec2(1.0, 1.0), 0.0);
 					projectile.AddComponent<RigidBodyComponent>(projectileVelocity);
 					projectile.AddComponent<SpriteComponent>("bullet-image", 4, 4, 4);
 					projectile.AddComponent<BoxColliderComponent>(4, 4);
@@ -65,7 +65,7 @@ public:
 	void Update(std::unique_ptr<Registry>& pRegistry) {
 		for (auto entity : GetSystemEntities()) {
 			auto& projectileEmmiter = entity.GetComponent<ProjectileEmmiterComponent>();
-			const auto transform = entity.GetComponent<TranformComponent>();
+			const auto transform = entity.GetComponent<TransformComponent>();
 
 			if (projectileEmmiter.repeatFrequency == 0)
 				continue;
@@ -81,7 +81,7 @@ public:
 
 				Entity projectile = pRegistry->CreateEntity();
 				projectile.Group("projectiles");
-				projectile.AddComponent<TranformComponent>(projectilePosition, glm::vec2(1.0, 1.0), 0.0);
+				projectile.AddComponent<TransformComponent>(projectilePosition, glm::vec2(1.0, 1.0), 0.0);
 				projectile.AddComponent<RigidBodyComponent>(projectileEmmiter.projectileVelocity);
 				projectile.AddComponent<SpriteComponent>("bullet-image", 4, 4, 4);
 				projectile.AddComponent<BoxColliderComponent>(4, 4);

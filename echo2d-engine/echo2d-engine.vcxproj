@@ -139,6 +139,7 @@
     <ClInclude Include="src\Components\KeyboardControlComponent.h" />
     <ClInclude Include="src\Components\ProjectileComponent.h" />
     <ClInclude Include="src\Components\ProjectileEmmiterComponent.h" />
+    <ClInclude Include="src\Components\TextComponent.h" />
     <ClInclude Include="src\Events\KeyPressedEvent.h" />
     <ClInclude Include="src\Event\Event.h" />
     <ClInclude Include="src\Event\EventBus.h" />
@@ -417,8 +418,10 @@
     <ClInclude Include="src\Systems\ProjectileEmmiterSystem.h" />
     <ClInclude Include="src\Systems\ProjectileLifecycleSystem.h" />
     <ClInclude Include="src\Systems\RenderColliderDebugSystem.h" />
+    <ClInclude Include="src\Systems\RenderHealthBarSystem.h" />
     <ClInclude Include="src\Systems\RenderSpriteDebugSystem.h" />
     <ClInclude Include="src\Systems\RenderSystem.h" />
+    <ClInclude Include="src\Systems\RenderTextSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\tilemaps\jungle.map" />
@@ -605,6 +608,7 @@
   <ItemGroup>
     <Font Include="assets\fonts\arial.ttf" />
     <Font Include="assets\fonts\charriot.ttf" />
+    <Font Include="assets\fonts\pico8.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,14 +9,14 @@
 class RenderSystem : public System {
 public:
 	RenderSystem() {
-		RequireComponent<TranformComponent>();
+		RequireComponent<TransformComponent>();
 		RequireComponent<SpriteComponent>();
 	}
 	~RenderSystem() {};
 	void Update(SDL_Renderer* pRenderer, std::unique_ptr<AssetStore>& pAssetStore, SDL_Rect& pCamera) {
 
 		struct RenderableEntity {
-			TranformComponent tranformComponent;
+			TransformComponent tranformComponent;
 			SpriteComponent spriteComponent;
 		};
 
@@ -24,7 +24,7 @@ public:
 		for (auto& entity : GetSystemEntities()) {
 			RenderableEntity renderableEntity;
 			renderableEntity.spriteComponent = entity.GetComponent<SpriteComponent>();
-			renderableEntity.tranformComponent = entity.GetComponent<TranformComponent>();
+			renderableEntity.tranformComponent = entity.GetComponent<TransformComponent>();
 			_renderableEntity.emplace_back(renderableEntity);
 		}
 		//sort the vector by the z-index value

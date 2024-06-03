@@ -9,13 +9,13 @@ class CameraMovementSystem: public System
 {
 public:
 	CameraMovementSystem() {
-		RequireComponent<TranformComponent>();
+		RequireComponent<TransformComponent>();
 		RequireComponent<CameraFollowComponent>();
 	}
 	~CameraMovementSystem() {}
 	void Update(SDL_Rect& pCamera) {
 		for (auto entity : GetSystemEntities()) {
-			auto transform = entity.GetComponent<TranformComponent>();
+			auto transform = entity.GetComponent<TransformComponent>();
 			if (transform.position.x + (pCamera.w / 2) < EchoGame::mapWidth) {
 				pCamera.x = transform.position.x - (EchoGame::windowWidth / 2);
 			}

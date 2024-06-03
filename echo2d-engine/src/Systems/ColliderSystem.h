@@ -11,7 +11,7 @@ class ColliderSystem : public System {
 public:
 	ColliderSystem() {
 		RequireComponent<BoxColliderComponent>();
-		RequireComponent<TranformComponent>();
+		RequireComponent<TransformComponent>();
 	}
 
 	void Update(std::unique_ptr<EventBus>& pEventBus) {
@@ -19,14 +19,14 @@ public:
 
 		for (auto i = entities.begin(); i != entities.end(); i++) {
 			Entity a = *i;
-			auto aTransform = a.GetComponent<TranformComponent>();
+			auto aTransform = a.GetComponent<TransformComponent>();
 			auto aCollider = a.GetComponent<BoxColliderComponent>();
 			for (auto j = i; j != entities.end(); j++) {
 				Entity b = *j;
 			
 				if (a == b) continue;
 
-				auto bTransform = b.GetComponent<TranformComponent>();
+				auto bTransform = b.GetComponent<TransformComponent>();
 				auto bCollider = b.GetComponent<BoxColliderComponent>();
 
 				bool isCollision = CheckAABBCollision(	aTransform.position.x, aTransform.position.y, aCollider.width * aTransform.scale.x, aCollider.height * aTransform.scale.y,

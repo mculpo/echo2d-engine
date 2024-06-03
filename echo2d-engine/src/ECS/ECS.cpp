@@ -183,19 +183,27 @@ Registry::~Registry()
 }
 
 void Registry::Update() {
+
 	for (auto entity : mEntitiesToBeAdded) {
 		AddEntityToSystem(entity);
 	}
 	mEntitiesToBeAdded.clear();
+
 	for (auto entity : mEntitiesToBeKilled) {
 		RemoveEntityFromSystem(entity);
 		mEntityComponentSignatures[entity.GetId()].reset();
+
+		for (auto pool : mComponentPools) {
+			if (pool) {
+				pool->RemoveEntityFromPool(entity.GetId());
+			}
+		}
+
 		mFreeIds.push_back(entity.GetId());
 
 		RemoveEntityTag(entity);
 		RemoveEntityGroup(entity);
 	}
-
 	mEntitiesToBeKilled.clear();
 
 }
