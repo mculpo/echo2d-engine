@@ -79,6 +79,18 @@ void EchoGame::Initialize()
 		return;
 	}
 
+	// Inicializa ImGui
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	// Configura o estilo do ImGui
+	ImGui::StyleColorsDark();
+
+	// Inicializa ImGui para SDL2
+	ImGui_ImplSDL2_InitForSDLRenderer(mWindow, mRenderer);
+	ImGui_ImplSDLRenderer2_Init(mRenderer);
+
 	mCamera.x = 0;
 	mCamera.y = 0;
 	mCamera.w = windowWidth;
@@ -102,6 +114,7 @@ void EchoGame::ProcessingInput()
 {
 	SDL_Event sdlEvent;
 	while (SDL_PollEvent(&sdlEvent)) {
+		ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
 		switch (sdlEvent.type)
 		{
 		case SDL_QUIT:
@@ -256,14 +269,26 @@ void EchoGame::Render()
 	mRegistry->GetSystem<RenderTextSystem>().Update(mRenderer, mAssetStore, mCamera);
 	
 	mRegistry->GetSystem<RenderColliderDebugSystem>().Update(mRenderer, mCamera);
+	mRegistry->GetSystem<RenderSpriteDebugSystem>().Update(mRenderer, mCamera);
 
-	//mRegistry->GetSystem<RenderSpriteDebugSystem>().Update(mRenderer, mCamera);
+	ImGui_ImplSDLRenderer2_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
+	ImGui::ShowDemoWindow();
+
+	ImGui::Render();
+	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), mRenderer);
+
+	
 
 	SDL_RenderPresent(mRenderer);
 }
 
 void EchoGame::Destroy()
 {
+	ImGui_ImplSDLRenderer2_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);
 	SDL_Quit();

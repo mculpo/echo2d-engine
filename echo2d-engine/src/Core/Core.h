@@ -22,4 +22,8 @@
 
 #include <glm/glm.hpp>
 
+#include <imgui/imgui.h>
+#include "../../libs/imgui/backends/imgui_impl_sdl2.h"
+#include "../../libs/imgui/backends/imgui_impl_sdlrenderer2.h"
+
 #include "Base.h"

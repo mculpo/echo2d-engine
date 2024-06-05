@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>E:\Projetos\C++\echo2d-engine\echo2d-engine\libs;C:\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Projetos\C++\echo2d-engine\echo2d-engine\libs\lua;C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Projetos\echo2d-engine\echo2d-engine\libs;C:\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Projetos\echo2d-engine\echo2d-engine\libs\lua;C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -82,7 +82,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard_C>Default</LanguageStandard_C>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>E:\Projetos\echo2d-engine\echo2d-engine\libs\glm;E:\Projetos\echo2d-engine\echo2d-engine\libs\imgui;E:\Projetos\echo2d-engine\echo2d-engine\libs\lua;E:\Projetos\echo2d-engine\echo2d-engine\libs\sol;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Projetos\echo2d-engine\echo2d-engine\libs\glm;E:\Projetos\echo2d-engine\echo2d-engine\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,6 +136,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="libs\imgui\backends\imgui_impl_sdl2.h" />
+    <ClInclude Include="libs\imgui\backends\imgui_impl_sdlrenderer2.h" />
     <ClInclude Include="src\Components\CameraFollowComponent.h" />
     <ClInclude Include="src\Components\HealthComponent.h" />
     <ClInclude Include="src\Components\KeyboardControlComponent.h" />
@@ -391,7 +393,6 @@
     <ClInclude Include="libs\imgui\imconfig.h" />
     <ClInclude Include="libs\imgui\imgui.h" />
     <ClInclude Include="libs\imgui\imgui_internal.h" />
-    <ClInclude Include="libs\imgui\imgui_sdl.h" />
     <ClInclude Include="libs\imgui\imstb_rectpack.h" />
     <ClInclude Include="libs\imgui\imstb_textedit.h" />
     <ClInclude Include="libs\imgui\imstb_truetype.h" />
@@ -566,12 +567,14 @@
     <None Include="SDL2_ttf.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="libs\imgui\backends\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="libs\imgui\backends\imgui_impl_sdlrenderer2.cpp" />
+    <ClCompile Include="libs\imgui\imgui_tables.cpp" />
     <ClCompile Include="src\AssetStore\AssetStore.cpp" />
     <ClCompile Include="libs\glm\detail\glm.cpp" />
     <ClCompile Include="libs\imgui\imgui.cpp" />
     <ClCompile Include="libs\imgui\imgui_demo.cpp" />
     <ClCompile Include="libs\imgui\imgui_draw.cpp" />
-    <ClCompile Include="libs\imgui\imgui_sdl.cpp" />
     <ClCompile Include="libs\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\ECS\ECS.cpp" />
     <ClCompile Include="src\Game\EchoGame.cpp" />

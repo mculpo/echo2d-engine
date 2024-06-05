@@ -20,8 +20,8 @@ public:
 			auto& sprite = entity.GetComponent<SpriteComponent>();
 
 			SDL_Rect rect;
-			rect.x = static_cast<int>(transform.position.x + sprite.srcRect.x - pCamera.x);
-			rect.y = static_cast<int>(transform.position.y + sprite.srcRect.y - pCamera.y);
+			rect.x = static_cast<int>(transform.position.x - pCamera.x);
+			rect.y = static_cast<int>(transform.position.y - pCamera.y);
 			rect.w = static_cast<int>(sprite.srcRect.w * transform.scale.x);
 			rect.h = static_cast<int>(sprite.srcRect.h * transform.scale.y);
 

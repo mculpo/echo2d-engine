@@ -18,7 +18,7 @@
 // Define as constantes
 const int ECHO2D_SUCCESS = 0;
 
-const int ECHO2D_FPS = 60;
+const int ECHO2D_FPS = 1000;
 const int ECHO2D_MILLISECS_PER_FRAME = 1000 / ECHO2D_FPS;
 
 
