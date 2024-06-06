@@ -5,9 +5,9 @@
 struct TransformComponent {
 	glm::vec2 position;
 	glm::vec2 scale;
-	double rotation;
+	float rotation;
 
-	TransformComponent(glm::vec2 pPosition = glm::vec2(0.0, 0.0), glm::vec2 pScale = glm::vec2(0.0, 0.0), double pRotation = 0) {
+	TransformComponent(glm::vec2 pPosition = glm::vec2(0.0, 0.0), glm::vec2 pScale = glm::vec2(0.0, 0.0), float pRotation = 0) {
 		this->position = pPosition;
 		this->scale = pScale;
 		this->rotation = pRotation;

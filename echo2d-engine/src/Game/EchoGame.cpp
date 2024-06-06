@@ -21,6 +21,7 @@
 #include "../Systems/RenderSpriteDebugSystem.h"
 #include "../Systems/RenderTextSystem.h"
 #include "../Systems/RenderHealthBarSystem.h"
+#include "../Systems/RenderEditorSystem.h"
 
 int EchoGame::windowWidth;
 int EchoGame::windowHeight;
@@ -60,7 +61,7 @@ void EchoGame::Initialize()
 		SDL_WINDOWPOS_CENTERED,
 		windowWidth,
 		windowHeight,
-		SDL_WINDOW_BORDERLESS
+		SDL_WINDOW_BORDERLESS | SDL_WINDOW_VULKAN
 	);
 
 	if (!mWindow) {
@@ -79,6 +80,7 @@ void EchoGame::Initialize()
 		return;
 	}
 
+#ifdef _DEBUG
 	// Inicializa ImGui
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -90,6 +92,7 @@ void EchoGame::Initialize()
 	// Inicializa ImGui para SDL2
 	ImGui_ImplSDL2_InitForSDLRenderer(mWindow, mRenderer);
 	ImGui_ImplSDLRenderer2_Init(mRenderer);
+#endif
 
 	mCamera.x = 0;
 	mCamera.y = 0;
@@ -114,7 +117,9 @@ void EchoGame::ProcessingInput()
 {
 	SDL_Event sdlEvent;
 	while (SDL_PollEvent(&sdlEvent)) {
+#ifdef _DEBUG
 		ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
+#endif
 		switch (sdlEvent.type)
 		{
 		case SDL_QUIT:
@@ -150,6 +155,10 @@ void EchoGame::LoadLevel(int level) {
 	mRegistry->AddSystem<RenderTextSystem>();
 	mRegistry->AddSystem<RenderHealthBarSystem>();
 	mRegistry->AddSystem<RenderSystem>();
+#ifdef _DEBUG
+	mRegistry->AddSystem<RenderEditorSystem>();
+#endif // !_DEBUG
+
 
 	mAssetStore->AddTexture(mRenderer, "tank-image", "./assets/images/tank-panther-right.png");
 	mAssetStore->AddTexture(mRenderer, "truck-image", "./assets/images/truck-ford-left.png");
@@ -191,38 +200,38 @@ void EchoGame::LoadLevel(int level) {
 	//TODO: Initialize the GameObjects
 	Entity chopper = mRegistry->CreateEntity();
 	chopper.Tag("player");
-	chopper.AddComponent<TransformComponent>(glm::vec2(10.0, 10.0), glm::vec2(2, 2), 0.0);
+	chopper.AddComponent<TransformComponent>(glm::vec2(240.0, 105.0), glm::vec2(1, 1), 0.0);
 	chopper.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
 	chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 1);
 	chopper.AddComponent<AnimationComponent>(2, 20, true);
 	chopper.AddComponent<BoxColliderComponent>(32,32);
 	chopper.AddComponent<ProjectileEmmiterComponent>(glm::vec2(500.0, 500.0), 0, 5000, 40, true);
-	chopper.AddComponent<KeyboardControlComponent>(glm::vec2(120, 120));
+	chopper.AddComponent<KeyboardControlComponent>(glm::vec2(300, 300));
 	chopper.AddComponent<CameraFollowComponent>();
 	chopper.AddComponent<HealthComponent>(100);
 
 	Entity radar = mRegistry->CreateEntity();
 	radar.AddComponent<TransformComponent>(glm::vec2(windowWidth - 74.0, windowHeight - 74.0), glm::vec2(1, 1), 0.0);
-	//radar.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
+	radar.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
 	radar.AddComponent<SpriteComponent>("radar-image", 64, 64, 1, true);
 	radar.AddComponent<AnimationComponent>(8, 3, true);
 
 
 	Entity tank = mRegistry->CreateEntity();
 	tank.Group("enemies");
-	tank.AddComponent<TransformComponent>(glm::vec2(100.0, 10.0), glm::vec2(2.0, 2.0), 0.0);
+	tank.AddComponent<TransformComponent>(glm::vec2(120.0, 500.0), glm::vec2(1.0, 1.0), 0.0);
 	tank.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
 	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1);
-	tank.AddComponent<BoxColliderComponent>(25, 25, glm::vec2(7.0, 7.0));
+	tank.AddComponent<BoxColliderComponent>(32, 32, glm::vec2(0.0, 0.0));
 	tank.AddComponent<ProjectileEmmiterComponent>(glm::vec2(100.0,0.0), 1000, 3000, 10, false);
 	tank.AddComponent<HealthComponent>(100);
 
 	Entity tank2 = mRegistry->CreateEntity();
 	tank2.Group("enemies");
-	tank2.AddComponent<TransformComponent>(glm::vec2(650.0, 10.0), glm::vec2(2.0, 2.0), 0.0);
+	tank2.AddComponent<TransformComponent>(glm::vec2(500.0, 500.0), glm::vec2(1.0, 1.0), 0.0);
 	tank2.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0));
 	tank2.AddComponent<SpriteComponent>("truck-image", 32, 32, 1);
-	tank2.AddComponent<BoxColliderComponent>(25, 25, glm::vec2(7.0, 7.0));
+	tank2.AddComponent<BoxColliderComponent>(32, 32, glm::vec2(0.0, 0.0));
 	tank2.AddComponent<ProjectileEmmiterComponent>(glm::vec2(0.0, 100.0), 1000, 4000, 10, false);
 	tank2.AddComponent<HealthComponent>(100);
 
@@ -267,28 +276,22 @@ void EchoGame::Render()
 	mRegistry->GetSystem<RenderSystem>().Update(mRenderer, mAssetStore, mCamera);
 	mRegistry->GetSystem<RenderHealthBarSystem>().Update(mRenderer, mAssetStore, mCamera);
 	mRegistry->GetSystem<RenderTextSystem>().Update(mRenderer, mAssetStore, mCamera);
-	
+#ifdef _DEBUG
 	mRegistry->GetSystem<RenderColliderDebugSystem>().Update(mRenderer, mCamera);
-	mRegistry->GetSystem<RenderSpriteDebugSystem>().Update(mRenderer, mCamera);
-
-	ImGui_ImplSDLRenderer2_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
-	ImGui::ShowDemoWindow();
-
-	ImGui::Render();
-	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), mRenderer);
-
-	
+	//mRegistry->GetSystem<RenderSpriteDebugSystem>().Update(mRenderer, mCamera);
+	mRegistry->GetSystem<RenderEditorSystem>().Update(mRenderer, mAssetStore, mCamera, mRegistry);
+#endif
 
 	SDL_RenderPresent(mRenderer);
 }
 
 void EchoGame::Destroy()
 {
+#ifdef _DEBUG
 	ImGui_ImplSDLRenderer2_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
+#endif
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);
 	SDL_Quit();

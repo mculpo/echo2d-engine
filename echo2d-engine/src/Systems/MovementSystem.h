@@ -20,7 +20,25 @@ public:
 
 			transform.position.x += (rigdibody.velocity.x * deltaTime);
 			transform.position.y += (rigdibody.velocity.y * deltaTime);
+
+			if (entity.HasTag("player")) {
+				transform.position.x = transform.position.x < 0 ? 0 : transform.position.x;
+				transform.position.y = transform.position.y < 0 ? 0 : transform.position.y;
+				transform.position.x = transform.position.x > EchoGame::mapWidth - 40 ? EchoGame::mapWidth - 40: transform.position.x;
+				transform.position.y = transform.position.y > EchoGame::mapHeight - 40 ? EchoGame::mapHeight - 40 : transform.position.y;
+			}
+
+			if (IsEntityOutsideMap(transform) && !entity.HasTag("player")) {
+				entity.Destroy();
+			}
 		}
+	}
+private:
+	bool IsEntityOutsideMap(TransformComponent pTranformComponent) {
+		return (
+			pTranformComponent.position.x < 0 || pTranformComponent.position.y > EchoGame::mapWidth ||
+			pTranformComponent.position.y < 0 || pTranformComponent.position.y > EchoGame::mapHeight
+		);
 	}
 };
 

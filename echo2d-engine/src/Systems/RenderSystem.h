@@ -16,51 +16,61 @@ public:
 	void Update(SDL_Renderer* pRenderer, std::unique_ptr<AssetStore>& pAssetStore, SDL_Rect& pCamera) {
 
 		struct RenderableEntity {
-			TransformComponent tranformComponent;
-			SpriteComponent spriteComponent;
+			std::reference_wrapper <TransformComponent> transformComponent;
+			std::reference_wrapper <SpriteComponent> spriteComponent;
 		};
 
 		std::vector<RenderableEntity> _renderableEntity;
+		_renderableEntity.reserve(GetSystemEntities().size());
+
 		for (auto& entity : GetSystemEntities()) {
-			RenderableEntity renderableEntity;
-			renderableEntity.spriteComponent = entity.GetComponent<SpriteComponent>();
-			renderableEntity.tranformComponent = entity.GetComponent<TransformComponent>();
-			_renderableEntity.emplace_back(renderableEntity);
+			
+			auto &spriteComponent = entity.GetComponent<SpriteComponent>();
+			auto &transformComponent = entity.GetComponent<TransformComponent>();
+
+			if (IsEntityOutsideCameraView(transformComponent, spriteComponent, pCamera) && !spriteComponent.isStatic) {
+				continue;
+			}
+
+			_renderableEntity.push_back({ transformComponent , spriteComponent});
 		}
+
 		//sort the vector by the z-index value
 		std::sort(
 			_renderableEntity.begin(),
 			_renderableEntity.end(),
 			[](const RenderableEntity& a, const RenderableEntity& b) {
-				return a.spriteComponent.zIndex < b.spriteComponent.zIndex;
+				return a.spriteComponent.get().zIndex < b.spriteComponent.get().zIndex;
 			}
 		);
 
 		// TODO
 		for (auto& entity : _renderableEntity) {
-			const auto transform = entity.tranformComponent;
-			const auto sprite = entity.spriteComponent;
-
-			auto _posX = sprite.isStatic ? transform.position.x : transform.position.x - pCamera.x;
-			auto _posY = sprite.isStatic ? transform.position.y : transform.position.y - pCamera.y;
-
-			SDL_Rect dstRect = {
-				static_cast<int> (_posX),
-				static_cast<int> (_posY),
-				static_cast<int> (sprite.srcRect.w * transform.scale.x),
-				static_cast<int> (sprite.srcRect.h * transform.scale.y)
-			};
+			SDL_Rect destRect;
+			destRect.x = static_cast<int>(entity.transformComponent.get().position.x) - (entity.spriteComponent.get().isStatic ? 0 : pCamera.x);
+			destRect.y = static_cast<int>(entity.transformComponent.get().position.y) - (entity.spriteComponent.get().isStatic ? 0 : pCamera.y);
+			destRect.w = static_cast<int>(entity.spriteComponent.get().srcRect.w * entity.transformComponent.get().scale.x);
+			destRect.h = static_cast<int>(entity.spriteComponent.get().srcRect.h * entity.transformComponent.get().scale.y);
 
 			SDL_RenderCopyEx(
 				pRenderer,
-				pAssetStore->GetTexture(sprite.texture),
-				&sprite.srcRect,
-				&dstRect,
-				transform.rotation,
+				pAssetStore->GetTexture(entity.spriteComponent.get().texture),
+				&entity.spriteComponent.get().srcRect,
+				&destRect,
+				entity.transformComponent.get().rotation,
 				NULL,
-				SDL_FLIP_NONE
+				entity.spriteComponent.get().flip
 			);
 		}
+	}
+private:
+	bool IsEntityOutsideCameraView(const TransformComponent& transformComponent, const SpriteComponent& spriteComponent, const SDL_Rect& pCamera) const {
+		return (
+			transformComponent.position.x + (transformComponent.scale.x * spriteComponent.srcRect.w) < pCamera.x ||
+			transformComponent.position.x > pCamera.x + pCamera.w ||
+			transformComponent.position.y + (transformComponent.scale.y * spriteComponent.srcRect.h) < pCamera.y ||
+			transformComponent.position.y > pCamera.y + pCamera.h
+			);
 	}
 };
 #endif

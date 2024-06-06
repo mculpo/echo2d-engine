@@ -882,6 +882,9 @@
     <ClInclude Include="libs\imgui\backends\imgui_impl_sdlrenderer2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Systems\RenderEditorSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glm\detail\func_common.inl">
