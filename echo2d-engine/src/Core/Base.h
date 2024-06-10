@@ -18,7 +18,7 @@
 // Define as constantes
 const int ECHO2D_SUCCESS = 0;
 
-const int ECHO2D_FPS = 1000;
+const int ECHO2D_FPS = 60;
 const int ECHO2D_MILLISECS_PER_FRAME = 1000 / ECHO2D_FPS;
 
 
@@ -43,6 +43,8 @@ const SDL_Color SDL_COLOR_GRAY = { 128, 128, 128, 255 };
 const SDL_Color SDL_COLOR_BROWN = { 165, 42, 42, 255 };
 const SDL_Color SDL_COLOR_PINK = { 255, 192, 203, 255 };
 
+
+#include "../Core/Time.h"
 #endif
 
 

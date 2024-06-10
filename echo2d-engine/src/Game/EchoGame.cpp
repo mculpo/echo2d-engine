@@ -8,6 +8,7 @@
 #include "../Components/ProjectileEmmiterComponent.h"
 #include "../Components/HealthComponent.h"
 #include "../Components/TextComponent.h"
+#include "../Components/KeyboardControlComponent.h"
 #include "../Systems/MovementSystem.h"
 #include "../Systems/RenderSystem.h"
 #include "../Systems/AnimationSystem.h"
@@ -22,13 +23,16 @@
 #include "../Systems/RenderTextSystem.h"
 #include "../Systems/RenderHealthBarSystem.h"
 #include "../Systems/RenderEditorSystem.h"
+#include "../Systems/ScriptSystem.h"
+
+#include "LoaderLevel.h"
 
 int EchoGame::windowWidth;
 int EchoGame::windowHeight;
 int EchoGame::mapWidth;
 int EchoGame::mapHeight;
 
-EchoGame::EchoGame() : mIsRunning(false)
+EchoGame::EchoGame() : mIsRunning(false), mTime(Time::GetInstance())
 {
 	mRegistry = std::make_unique<Registry>();
 	mAssetStore = std::make_unique<AssetStore>();
@@ -53,15 +57,15 @@ void EchoGame::Initialize()
 
 	SDL_DisplayMode displayMode;
 	SDL_GetCurrentDisplayMode(0, &displayMode);
-	windowWidth = 1280;//800; //displayMode.w;
-	windowHeight = 720;// 600; //displayMode.h;
+	windowWidth = 800; //displayMode.w;
+	windowHeight = 600; //displayMode.h;
 	mWindow = SDL_CreateWindow(
 		NULL,
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		windowWidth,
 		windowHeight,
-		SDL_WINDOW_BORDERLESS | SDL_WINDOW_VULKAN
+		SDL_WINDOW_OPENGL
 	);
 
 	if (!mWindow) {
@@ -72,7 +76,7 @@ void EchoGame::Initialize()
 	mRenderer = SDL_CreateRenderer(
 		mWindow,
 		-1,
-		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+		SDL_RENDERER_ACCELERATED 
 	);
 
 	if (!mRenderer) {
@@ -137,11 +141,7 @@ void EchoGame::ProcessingInput()
 	}
 }
 
-glm::vec2 position;
-glm::vec2 velocity;
-
-void EchoGame::LoadLevel(int level) {
-
+void EchoGame::Setup() {
 	mRegistry->AddSystem<MovementSystem>();
 	mRegistry->AddSystem<AnimationSystem>();
 	mRegistry->AddSystem<ColliderSystem>();
@@ -150,6 +150,7 @@ void EchoGame::LoadLevel(int level) {
 	mRegistry->AddSystem<CameraMovementSystem>();
 	mRegistry->AddSystem<ProjectileEmmiterSystem>();
 	mRegistry->AddSystem<ProjectileLifecycleSystem>();
+	mRegistry->AddSystem<ScriptSystem>();
 	mRegistry->AddSystem<RenderColliderDebugSystem>();
 	mRegistry->AddSystem<RenderSpriteDebugSystem>();
 	mRegistry->AddSystem<RenderTextSystem>();
@@ -159,98 +160,20 @@ void EchoGame::LoadLevel(int level) {
 	mRegistry->AddSystem<RenderEditorSystem>();
 #endif // !_DEBUG
 
+	
 
-	mAssetStore->AddTexture(mRenderer, "tank-image", "./assets/images/tank-panther-right.png");
-	mAssetStore->AddTexture(mRenderer, "truck-image", "./assets/images/truck-ford-left.png");
-	mAssetStore->AddTexture(mRenderer, "chopper-image", "./assets/images/chopper-spritesheet.png");
-	mAssetStore->AddTexture(mRenderer, "radar-image", "./assets/images/radar.png");
-	mAssetStore->AddTexture(mRenderer, "tile-map", "./assets/tilemaps/jungle.png");
-	mAssetStore->AddTexture(mRenderer, "bullet-image", "./assets/images/bullet.png");
+	//BINDING lua Scripts
+	mRegistry->GetSystem<ScriptSystem>().CreateLuaBindings(mLua);
 
-	mAssetStore->AddFont("pico8-font", "./assets/fonts/pico8.ttf", 14);
-	mAssetStore->AddFont("pico8-font-5", "./assets/fonts/pico8.ttf", 5);
-	mAssetStore->AddFont("pico8-font-10", "./assets/fonts/pico8.ttf", 10);
-
-	int tileSize = 32;
-	double tileScale = 2.0;
-	int mapNumCols = 25;
-	int mapNumRows = 20;
-
-	std::fstream mapFile;
-	mapFile.open("./assets/tilemaps/jungle.map");
-	for (int y = 0; y < mapNumRows; y++) {
-		for (int x = 0; x < mapNumCols; x++) {
-			char ch;
-			mapFile.get(ch);
-			int srcRectY = std::atoi(&ch) * tileSize;
-			mapFile.get(ch);
-			int srcRectX = std::atoi(&ch) * tileSize;
-			mapFile.ignore();
-
-			Entity map = mRegistry->CreateEntity();
-			map.Group("tiles");
-			map.AddComponent<TransformComponent>(glm::vec2(x * (tileScale * tileSize), y * (tileScale * tileSize)), glm::vec2(tileScale, tileScale), 0.0);
-			map.AddComponent<SpriteComponent>("tile-map", tileSize, tileSize, 0, false, srcRectX, srcRectY);
-		}
-	}
-	mapFile.close();
-	mapWidth = mapNumCols * tileSize * tileScale;
-	mapHeight = mapNumRows * tileSize * tileScale;
-
-	//TODO: Initialize the GameObjects
-	Entity chopper = mRegistry->CreateEntity();
-	chopper.Tag("player");
-	chopper.AddComponent<TransformComponent>(glm::vec2(240.0, 105.0), glm::vec2(1, 1), 0.0);
-	chopper.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
-	chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 1);
-	chopper.AddComponent<AnimationComponent>(2, 20, true);
-	chopper.AddComponent<BoxColliderComponent>(32,32);
-	chopper.AddComponent<ProjectileEmmiterComponent>(glm::vec2(500.0, 500.0), 0, 5000, 40, true);
-	chopper.AddComponent<KeyboardControlComponent>(glm::vec2(300, 300));
-	chopper.AddComponent<CameraFollowComponent>();
-	chopper.AddComponent<HealthComponent>(100);
-
-	Entity radar = mRegistry->CreateEntity();
-	radar.AddComponent<TransformComponent>(glm::vec2(windowWidth - 74.0, windowHeight - 74.0), glm::vec2(1, 1), 0.0);
-	radar.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
-	radar.AddComponent<SpriteComponent>("radar-image", 64, 64, 1, true);
-	radar.AddComponent<AnimationComponent>(8, 3, true);
-
-
-	Entity tank = mRegistry->CreateEntity();
-	tank.Group("enemies");
-	tank.AddComponent<TransformComponent>(glm::vec2(120.0, 500.0), glm::vec2(1.0, 1.0), 0.0);
-	tank.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
-	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1);
-	tank.AddComponent<BoxColliderComponent>(32, 32, glm::vec2(0.0, 0.0));
-	tank.AddComponent<ProjectileEmmiterComponent>(glm::vec2(100.0,0.0), 1000, 3000, 10, false);
-	tank.AddComponent<HealthComponent>(100);
-
-	Entity tank2 = mRegistry->CreateEntity();
-	tank2.Group("enemies");
-	tank2.AddComponent<TransformComponent>(glm::vec2(500.0, 500.0), glm::vec2(1.0, 1.0), 0.0);
-	tank2.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0));
-	tank2.AddComponent<SpriteComponent>("truck-image", 32, 32, 1);
-	tank2.AddComponent<BoxColliderComponent>(32, 32, glm::vec2(0.0, 0.0));
-	tank2.AddComponent<ProjectileEmmiterComponent>(glm::vec2(0.0, 100.0), 1000, 4000, 10, false);
-	tank2.AddComponent<HealthComponent>(100);
-
-	Entity label = mRegistry->CreateEntity();
-	label.Group("labels");
-	label.AddComponent<TextComponent>(glm::vec2(windowWidth/2, 10), "CHOOPER", "pico8-font", SDL_COLOR_GREEN, true);
-}
-void EchoGame::Setup() {
-	LoadLevel();
+	LoaderLevel loaderLevel;
+	mLua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::os);
+	loaderLevel.LoadLevel(mLua, mRegistry, mAssetStore, mRenderer, 1);
 }
 
 void EchoGame::Update()
 {
-	/*int timeToWait = ECHO2D_MILLISECS_PER_FRAME - (SDL_GetTicks() - mMillisecPreviousFrame);
-	if (timeToWait > 0)
-		SDL_Delay(timeToWait);*/
-
-	double deltaTime = (SDL_GetTicks() - mMillisecPreviousFrame) / 1000.0;
-	mMillisecPreviousFrame = SDL_GetTicks();
+	// run logical to calculet deltatime and timeToWait a Fps control
+	mTime.Run();
 
 	mEventBus->Reset();
 	mRegistry->Update();
@@ -259,27 +182,30 @@ void EchoGame::Update()
 	mRegistry->GetSystem<DamageSystem>().SubscribeToEvents(mEventBus);
 	mRegistry->GetSystem<ProjectileEmmiterSystem>().SubscribeToEvents(mEventBus);
 
-	mRegistry->GetSystem<MovementSystem>().Update(deltaTime);
+	mRegistry->GetSystem<MovementSystem>().Update();
 	mRegistry->GetSystem<AnimationSystem>().Update();
 	mRegistry->GetSystem<ColliderSystem>().Update(mEventBus);
 	mRegistry->GetSystem<ProjectileEmmiterSystem>().Update(mRegistry);
 	mRegistry->GetSystem<ProjectileLifecycleSystem>().Update();
 	mRegistry->GetSystem<CameraMovementSystem>().Update(mCamera);
+	mRegistry->GetSystem<ScriptSystem>().Update();
+
+	// update
+	mTime.UpdateMillisecPreviousFrame();
 }
 
 void EchoGame::Render()
 {
 	SDL_SetRenderDrawColor(mRenderer, 21, 21, 21, 255);
 	SDL_RenderClear(mRenderer);
-	//TODO: Renderer all gameobjects
 
 	mRegistry->GetSystem<RenderSystem>().Update(mRenderer, mAssetStore, mCamera);
 	mRegistry->GetSystem<RenderHealthBarSystem>().Update(mRenderer, mAssetStore, mCamera);
 	mRegistry->GetSystem<RenderTextSystem>().Update(mRenderer, mAssetStore, mCamera);
 #ifdef _DEBUG
 	mRegistry->GetSystem<RenderColliderDebugSystem>().Update(mRenderer, mCamera);
-	//mRegistry->GetSystem<RenderSpriteDebugSystem>().Update(mRenderer, mCamera);
-	mRegistry->GetSystem<RenderEditorSystem>().Update(mRenderer, mAssetStore, mCamera, mRegistry);
+	mRegistry->GetSystem<RenderSpriteDebugSystem>().Update(mRenderer, mCamera);
+	//mRegistry->GetSystem<RenderEditorSystem>().Update(mRenderer, mAssetStore, mCamera, mRegistry);
 #endif
 
 	SDL_RenderPresent(mRenderer);

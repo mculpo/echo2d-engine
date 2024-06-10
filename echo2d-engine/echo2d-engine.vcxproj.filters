@@ -885,6 +885,18 @@
     <ClInclude Include="src\Systems\RenderEditorSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Game\LoaderLevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\ScriptComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\ScriptSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glm\detail\func_common.inl">
@@ -1289,6 +1301,11 @@
     <None Include="SDL2_mixer.dll" />
     <None Include="SDL2_ttf.dll" />
     <None Include="assets\tilemaps\jungle.map" />
+    <None Include="assets\scripts\myscript.lua" />
+    <None Include="assets\scripts\Level1.lua" />
+    <None Include="assets\tilemaps\._desert.map" />
+    <None Include="assets\tilemaps\._jungle.map" />
+    <None Include="assets\tilemaps\desert.map" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="libs\glm\detail\glm.cpp">
@@ -1328,6 +1345,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="libs\imgui\imgui_tables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\LoaderLevel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1396,6 +1416,219 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\images\truck-ford-right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\tilemaps\jungle-night.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\tilemaps\._desert.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\tilemaps\._jungle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\tilemaps\desert.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-cannon-down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-cannon-killed.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-cannon-left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-cannon-right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-cannon-up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-gun-down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-gun-left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-gun-right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-gun-up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-walk-down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-walk-killed.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-walk-left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-walk-right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\army-walk-up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\bf109-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\boat.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\bomber.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\bomber-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\carrier.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\chopper-green-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\chopper-white-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\f22.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\f22-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\fw190.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\fw190-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\obstacles-1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\obstacles-2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\obstacles-3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\obstacles-4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\obstacles-5.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\obstacles-6.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\obstacles-7.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\radar-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\runway.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\sam-tank-left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\sam-tank-left-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\sam-tank-right-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\sam-truck-right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\su27.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\su27-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tank-panther-killed.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tank-panther-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tank-tiger-killed.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tank-tiger-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-5.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-6.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-7.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-9.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-10.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-11.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-12.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-13.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-14.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-15.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-16.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-17.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-18.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-19.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\tree-20.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\truck-ford-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\upf7.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\upf7-spritesheet.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

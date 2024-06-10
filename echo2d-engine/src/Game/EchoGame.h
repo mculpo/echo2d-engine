@@ -9,9 +9,14 @@ class EchoGame {
 private:
 	bool mIsRunning;
 	int mMillisecPreviousFrame = 0;
+	
 	SDL_Window* mWindow;
 	SDL_Renderer* mRenderer;
 	SDL_Rect mCamera;
+
+	sol::state mLua;
+
+	Time& mTime;
 
 	std::unique_ptr<Registry> mRegistry;
 	std::unique_ptr<AssetStore> mAssetStore;
@@ -22,7 +27,6 @@ public:
 	void Initialize();
 	void Run();
 	void ProcessingInput();
-	void LoadLevel(int level = 0);
 	void Setup();
 	void Update();
 	void Render();

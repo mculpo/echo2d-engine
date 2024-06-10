@@ -15,13 +15,9 @@ public:
 	}
 
 	void Update(SDL_Renderer* pRenderer, std::unique_ptr<AssetStore>& pAssetStore, SDL_Rect& pCamera) {
-		// Pré-calcular a fonte uma vez para reutilização
-		TTF_Font* font = pAssetStore->GetFont("pico8-font-10");
+		
 
-		// Criar uma SDL_Surface temporária para a renderização do texto fora do loop
-		SDL_Surface* surface = nullptr;
-		// Criar uma SDL_Texture temporária para a renderização do texto fora do loop
-		SDL_Texture* texture = nullptr;
+		
 
 		for (auto entity : GetSystemEntities()) {
 
@@ -48,9 +44,13 @@ public:
 
 			std::string healthText = std::to_string(health.healthPercentage);
 
-			surface = TTF_RenderText_Blended(font, healthText.c_str(), currentColor);
+			SDL_Surface* surface;
+			SDL_Texture* texture;
+
+			surface = TTF_RenderText_Blended(pAssetStore->GetFont("pico8-font-10"), healthText.c_str(), currentColor);
 			texture = SDL_CreateTextureFromSurface(pRenderer, surface);
 
+			SDL_FreeSurface(surface);
 
 			int labelWidth = 0;
 			int labelHeight = 0;
@@ -65,12 +65,8 @@ public:
 			};
 
 			SDL_RenderCopy(pRenderer, texture, NULL, &dstRect);
-
-		}
-		if (surface)
-			SDL_FreeSurface(surface);
-		if (texture)
 			SDL_DestroyTexture(texture);
+		}
 	}
 private:
 

@@ -14,6 +14,7 @@
 #include <fstream>
 #include <algorithm>
 #include <queue>
+#include <tuple>
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -27,5 +28,7 @@
 #include "../../libs/imgui/backends/imgui_impl_sdl2.h"
 #include "../../libs/imgui/backends/imgui_impl_sdlrenderer2.h"
 #endif
+
+#include <sol/sol.hpp>
 
 #include "Base.h"

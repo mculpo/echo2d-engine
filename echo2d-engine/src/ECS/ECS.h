@@ -118,7 +118,7 @@ private:
 	std::unordered_map<int, int> mIndexToEntityId;
 
 public:
-	Pool(int pCapacity = 100) {
+	Pool(int pCapacity = 500) {
 		mSize = 0;
 		mData.resize(pCapacity);
 	}

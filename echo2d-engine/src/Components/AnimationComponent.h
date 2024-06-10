@@ -6,11 +6,12 @@
 struct AnimationComponent {
 
 	int numFrames;
-	int currentFrame;
 	int frameSpeedRate;
-	bool isLoop;
+	int currentFrame;
 	int startTime;
 	int lastUpdateTime;
+
+	bool isLoop;
 
 	AnimationComponent(int pNumFrames = 1, int pFrameSpeedRate = 1, bool pIsLoop = true) {
 		this->numFrames = pNumFrames;
