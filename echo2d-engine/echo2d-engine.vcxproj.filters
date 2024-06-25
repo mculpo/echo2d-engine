@@ -1306,6 +1306,7 @@
     <None Include="assets\tilemaps\._desert.map" />
     <None Include="assets\tilemaps\._jungle.map" />
     <None Include="assets\tilemaps\desert.map" />
+    <None Include="assets\scripts\Level0.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="libs\glm\detail\glm.cpp">

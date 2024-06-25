@@ -82,7 +82,7 @@ void LoaderLevel::LoadLevel(
 	int tileSize		= static_cast<int>(map["tile_size"]);
 	double tileScale	= static_cast<int>(map["scale"]);
 
-	/*std::fstream mapFile;
+	std::fstream mapFile;
 	mapFile.open(mapFilePath);
 	for (int y = 0; y < mapNumRows; y++) {
 		for (int x = 0; x < mapNumCols; x++) {
@@ -98,7 +98,7 @@ void LoaderLevel::LoadLevel(
 			_mapEntity.AddComponent<SpriteComponent>(mapTextureAssetId, tileSize, tileSize, 0, false, srcRectX, srcRectY);
 		}
 	}
-	mapFile.close();*/
+	mapFile.close();
 	EchoGame::mapWidth = mapNumCols * tileSize * static_cast<int>(tileScale);
 	EchoGame::mapHeight = mapNumRows * tileSize * static_cast<int>(tileScale);
 
@@ -252,45 +252,4 @@ void LoaderLevel::LoadLevel(
 
 		i++;
 	}
-	////TODO: Initialize the GameObjects
-	//Entity chopper = pRegister->CreateEntity();
-	//chopper.Tag("player");
-	//chopper.AddComponent<TransformComponent>(glm::vec2(240.0, 105.0), glm::vec2(1, 1), 0.0);
-	//chopper.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
-	//chopper.AddComponent<SpriteComponent>("chopper-texture", 32, 32, 1);
-	//chopper.AddComponent<AnimationComponent>(2, 20, true);
-	//chopper.AddComponent<BoxColliderComponent>(32, 32);
-	//chopper.AddComponent<ProjectileEmmiterComponent>(glm::vec2(500.0, 500.0), 0, 5000, 40, true);
-	//chopper.AddComponent<KeyboardControlComponent>(glm::vec2(300, 300));
-	//chopper.AddComponent<CameraFollowComponent>();
-	//chopper.AddComponent<HealthComponent>(100);
-
-	//Entity radar = pRegister->CreateEntity();
-	//radar.AddComponent<TransformComponent>(glm::vec2(EchoGame::windowWidth - 74.0, EchoGame::windowHeight - 74.0), glm::vec2(1, 1), 0.0);
-	//radar.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
-	//radar.AddComponent<SpriteComponent>("radar-image", 64, 64, 1, true);
-	//radar.AddComponent<AnimationComponent>(8, 3, true);
-
-
-	//Entity tank = pRegister->CreateEntity();
-	//tank.Group("enemies");
-	//tank.AddComponent<TransformComponent>(glm::vec2(120.0, 500.0), glm::vec2(1.0, 1.0), 0.0);
-	//tank.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
-	//tank.AddComponent<SpriteComponent>("tank-texture", 32, 32, 1);
-	//tank.AddComponent<BoxColliderComponent>(32, 32, glm::vec2(0.0, 0.0));
-	//tank.AddComponent<ProjectileEmmiterComponent>(glm::vec2(100.0, 0.0), 1000, 3000, 10, false);
-	//tank.AddComponent<HealthComponent>(100);
-
-	//Entity tank2 = pRegister->CreateEntity();
-	//tank2.Group("enemies");
-	//tank2.AddComponent<TransformComponent>(glm::vec2(500.0, 500.0), glm::vec2(1.0, 1.0), 0.0);
-	//tank2.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0));
-	//tank2.AddComponent<SpriteComponent>("tank-texture", 32, 32, 1);
-	//tank2.AddComponent<BoxColliderComponent>(32, 32, glm::vec2(0.0, 0.0));
-	//tank2.AddComponent<ProjectileEmmiterComponent>(glm::vec2(0.0, 100.0), 1000, 4000, 10, false);
-	//tank2.AddComponent<HealthComponent>(100);
-
-	/*Entity label = pRegister->CreateEntity();
-	label.Group("labels");
-	label.AddComponent<TextComponent>(glm::vec2(EchoGame::windowWidth / 2, 10), "CHOOPER", "pico8-font-10", SDL_COLOR_GREEN, true);*/
 }

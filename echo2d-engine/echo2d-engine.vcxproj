@@ -440,6 +440,7 @@
     <ClInclude Include="src\Systems\ScriptSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\scripts\Level0.lua" />
     <None Include="assets\scripts\Level1.lua" />
     <None Include="assets\scripts\myscript.lua" />
     <None Include="assets\tilemaps\._desert.map" />

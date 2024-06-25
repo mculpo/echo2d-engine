@@ -167,7 +167,7 @@ void EchoGame::Setup() {
 
 	LoaderLevel loaderLevel;
 	mLua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::os);
-	loaderLevel.LoadLevel(mLua, mRegistry, mAssetStore, mRenderer, 1);
+	loaderLevel.LoadLevel(mLua, mRegistry, mAssetStore, mRenderer, 0);
 }
 
 void EchoGame::Update()
@@ -205,7 +205,7 @@ void EchoGame::Render()
 #ifdef _DEBUG
 	mRegistry->GetSystem<RenderColliderDebugSystem>().Update(mRenderer, mCamera);
 	mRegistry->GetSystem<RenderSpriteDebugSystem>().Update(mRenderer, mCamera);
-	//mRegistry->GetSystem<RenderEditorSystem>().Update(mRenderer, mAssetStore, mCamera, mRegistry);
+	mRegistry->GetSystem<RenderEditorSystem>().Update(mRenderer, mAssetStore, mCamera, mRegistry);
 #endif
 
 	SDL_RenderPresent(mRenderer);
