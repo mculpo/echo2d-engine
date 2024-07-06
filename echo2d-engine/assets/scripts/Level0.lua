@@ -130,8 +130,67 @@ Level = {
                     src_rect_y = 0
                 },
                 animation = {
-                    num_frames = 2,
-                    speed_rate = 10 -- fps
+                    current_animation = 0,
+                    animations = {
+                        [0] =
+                        {
+                            animation_frames = {
+                                [0] =
+                                { 
+                                    rect = { x = 0, y = 0, w = 32, h = 32 }, 
+                                    time_to_end = 0.1 
+                                },
+                                { 
+                                    rect = { x = 32, y = 0, w = 32, h = 32 }, 
+                                    time_to_end = 0.1 
+                                }
+                            },
+                            is_loop = true
+                        },
+                        {
+                            animation_frames = {
+                                [0] =
+                                { 
+                                    rect = { x = 0, y = 32, w = 32, h = 32 }, 
+                                    time_to_end = 0.1
+                                },
+                                { 
+                                    rect = { x = 32, y = 32, w = 32, h = 32 }, 
+                                    time_to_end = 0.1
+                                }
+                            },
+                            is_loop = true
+                        },
+                        {
+                            animation_frames = {
+                                [0] =
+                                { 
+                                    rect = { x = 0, y = 64, w = 32, h = 32 }, 
+                                    time_to_end = 0.1
+                                },
+                                { 
+                                    rect = { x = 32, y = 64, w = 32, h = 32 }, 
+                                    time_to_end = 0.1
+                                }
+                            },
+                            is_loop = true
+                        },
+                        {
+                            animation_frames = {
+                                [0] =
+                                { 
+                                    rect = { x = 0, y = 96, w = 32, h = 32 }, 
+                                    time_to_end = 0.1
+                                },
+                                { 
+                                    rect = { x = 32, y = 96, w = 32, h = 32 }, 
+                                    time_to_end = 0.1
+                                }
+                            },
+                            is_loop = true
+                        }
+                    },
+                    current_time_animation = 0.0
                 },
                 boxcollider = {
                     width = 32,

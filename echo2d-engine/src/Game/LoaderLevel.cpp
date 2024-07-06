@@ -167,10 +167,56 @@ void LoaderLevel::LoadLevel(
 
 			sol::optional<sol::table> hasAnimation = entity["components"]["animation"];
 			if (hasAnimation != sol::nullopt) {
+
+				std::vector<Animation> animations;
+
+				sol::table animations_t = entity["components"]["animation"]["animations"];
+				int indexAnimation = 0;
+
+				while (true) {
+					sol::optional<sol::table> hasAnimation_t = animations_t[indexAnimation];
+					
+					if (hasAnimation_t == sol::nullopt) {
+						break;
+					}
+					sol::table animation_entity = animations_t[indexAnimation];
+
+					std::vector<AnimationFrame> animationFrames;
+
+					sol::table animationFrames_t = animation_entity["animation_frames"];
+					int indexAnimationFrame = 0;
+
+					while (true) {
+						sol::optional<sol::table> hasAnimationFrame_t = animationFrames_t[indexAnimationFrame];
+						
+						if (hasAnimationFrame_t == sol::nullopt) {
+							break;
+						}
+						sol::table animationframe_entity = animationFrames_t[indexAnimationFrame];
+						AnimationFrame _animationFrame(
+							animationframe_entity["rect"]["x"],
+							animationframe_entity["rect"]["y"],
+							animationframe_entity["rect"]["w"],
+							animationframe_entity["rect"]["h"],
+							static_cast<float>(animationframe_entity["time_to_end"].get_or(0.0))
+						);
+
+						animationFrames.push_back(_animationFrame);
+
+						indexAnimationFrame++;
+					}
+
+					Animation animation(animationFrames, animation_entity["is_loop"]);
+
+					animations.push_back(animation);
+
+					indexAnimation++;
+				}
+
+				
 				_entity.AddComponent<AnimationComponent>(
-					entity["components"]["animation"]["num_frames"].get_or(1),
-					entity["components"]["animation"]["speed_rate"].get_or(1),
-					entity["components"]["animation"]["loop"].get_or(false)
+					entity["components"]["animation"]["current_animation"].get_or(1),
+					animations
 				);
 			}
 

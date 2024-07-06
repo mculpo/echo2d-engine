@@ -6,14 +6,14 @@
 #include "../Event/EventBus.h"
 #include "../Events/KeyPressedEvent.h"
 #include "../Components/RigidBodyComponent.h"
-#include "../Components/SpriteComponent.h"
+#include "../Components/AnimationComponent.h"
 #include "../Components/KeyboardControlComponent.h"
 
 class KeyboardControlSystem : public System {
 public:
 	KeyboardControlSystem() {
 		RequireComponent<KeyboardControlComponent>();
-		RequireComponent<SpriteComponent>();
+		RequireComponent<AnimationComponent>();
 		RequireComponent<RigidBodyComponent>();
 	}
 
@@ -25,26 +25,30 @@ public:
 
 		for (auto entity : GetSystemEntities()) {
 			auto keyboard = entity.GetComponent<KeyboardControlComponent>();
-			auto& sprite = entity.GetComponent<SpriteComponent>();
+			auto& animation = entity.GetComponent<AnimationComponent>();
 			auto& rigidbody = entity.GetComponent<RigidBodyComponent>();
 
 			switch (pEvent.mSymbol)
 			{
 			case SDLK_UP:
 				rigidbody.velocity = VEC2_UP * keyboard.velocityObject;
-				sprite.srcRect.y = sprite.srcRect.h * 0;
+				animation.currentTimeAnimation = animation.currentAnimation = 0 ? animation.currentTimeAnimation : 0;
+				animation.currentAnimation = 0;
 				break;
 			case SDLK_RIGHT:
 				rigidbody.velocity = VEC2_RIGHT * keyboard.velocityObject;
-				sprite.srcRect.y = sprite.srcRect.h * 1;
+				animation.currentTimeAnimation = animation.currentAnimation = 1 ? animation.currentTimeAnimation : 0;
+				animation.currentAnimation = 1;
 				break;
 			case SDLK_DOWN:
 				rigidbody.velocity = VEC2_DOWN * keyboard.velocityObject;
-				sprite.srcRect.y = sprite.srcRect.h * 2;
+				animation.currentTimeAnimation = animation.currentAnimation = 2 ? animation.currentTimeAnimation : 0;
+				animation.currentAnimation = 2;
 				break;
 			case SDLK_LEFT:
 				rigidbody.velocity = VEC2_LEFT * keyboard.velocityObject;
-				sprite.srcRect.y = sprite.srcRect.h * 3;
+				animation.currentTimeAnimation = animation.currentAnimation = 3 ? animation.currentTimeAnimation : 0;
+				animation.currentAnimation = 3;
 				break;
 			}
 		}

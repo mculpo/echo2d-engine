@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>E:\Projetos\C++\echo2d-engine\echo2d-engine\libs;C:\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Projetos\C++\echo2d-engine\echo2d-engine\libs\lua;C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)libs;C:\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)libs\lua;C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>E:\Projetos\C++\echo2d-engine\echo2d-engine\libs;C:\SDL2\include;$(IncludePath)</IncludePath>
@@ -86,13 +86,13 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard_C>Default</LanguageStandard_C>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>E:\Projetos\C++\echo2d-engine\echo2d-engine\libs\glm;E:\Projetos\C++\echo2d-engine\echo2d-engine\libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs\glm;$(SolutionDir)libs\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;liblua54.a;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\Projetos\echo2d-engine\echo2d-engine\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
