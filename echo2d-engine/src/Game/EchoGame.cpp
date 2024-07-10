@@ -70,7 +70,7 @@ void EchoGame::Initialize()
 		SDL_WINDOWPOS_CENTERED,
 		windowWidth,
 		windowHeight,
-		SDL_WINDOW_OPENGL
+		SDL_WINDOW_SHOWN
 	);
 
 	if (!mWindow) {
@@ -118,9 +118,11 @@ void EchoGame::Run()
 {
 	Setup();
 	while (mIsRunning) {
+		TaskTime::start("RunningAllGameLogical");
 		ProcessingInput();
 		Update();
 		Render();
+		TaskTime::stop("RunningAllGameLogical");
 	}
 }
 
@@ -210,11 +212,10 @@ void EchoGame::Render()
 	mRegistry->GetSystem<RenderHealthBarSystem>().Update(mRenderer, mAssetStore, mCamera);
 	mRegistry->GetSystem<RenderTextSystem>().Update(mRenderer, mAssetStore, mCamera);
 #ifdef _DEBUG
-	mRegistry->GetSystem<RenderColliderDebugSystem>().Update(mRenderer, mCamera);
-	mRegistry->GetSystem<RenderSpriteDebugSystem>().Update(mRenderer, mCamera);
+	//mRegistry->GetSystem<RenderColliderDebugSystem>().Update(mRenderer, mCamera);
+	//mRegistry->GetSystem<RenderSpriteDebugSystem>().Update(mRenderer, mCamera);
 	mRegistry->GetSystem<RenderEditorSystem>().Update(mRenderer, mAssetStore, mCamera, mRegistry);
 #endif
-
 	SDL_RenderPresent(mRenderer);
 }
 

@@ -14,6 +14,8 @@ public:
 	}
 
 	void Update() {
+		TaskTime::start("AnimationSystem");
+
 		auto deltaTime = Time::GetInstance().DeltaTime();
 		for (auto entity : GetSystemEntities()) {
 			auto& animation = entity.GetComponent<AnimationComponent>();
@@ -23,14 +25,15 @@ public:
 
 			auto& _curAnimation = animation.animations[animation.currentAnimation];
 			auto _curAnimFrame = _curAnimation.animationFrames[_curAnimation.currentFrame];
+			auto size = _curAnimation.animationFrames.size();
 			if (animation.currentTimeAnimation >= _curAnimFrame.timeToEnd) {
 				animation.currentTimeAnimation = 0;
 
 				if (_curAnimation.isLoop) {
-					_curAnimation.currentFrame = (_curAnimation.currentFrame + 1) % _curAnimation.animationFrames.size();
+					_curAnimation.currentFrame = (_curAnimation.currentFrame + 1) % size;
 				}
 				else {
-					if (_curAnimation.currentFrame < _curAnimation.animationFrames.size() - 1) {
+					if (_curAnimation.currentFrame < size - 1) {
 						_curAnimation.currentFrame++;
 					}
 				}
@@ -43,6 +46,8 @@ public:
 			sprite.srcRect.w = _curAnimFrame.rect.w;
 			sprite.srcRect.h = _curAnimFrame.rect.h;
 		}
+
+		TaskTime::stop("AnimationSystem");
 	}
 };
 

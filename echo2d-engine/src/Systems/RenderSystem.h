@@ -14,7 +14,7 @@ public:
 	}
 	~RenderSystem() {};
 	void Update(SDL_Renderer* pRenderer, std::unique_ptr<AssetStore>& pAssetStore, SDL_Rect& pCamera) {
-
+		TaskTime::start("RenderSystem");
 		struct RenderableEntity {
 			std::reference_wrapper <TransformComponent> transformComponent;
 			std::reference_wrapper <SpriteComponent> spriteComponent;
@@ -62,6 +62,7 @@ public:
 				entity.spriteComponent.get().flip
 			);
 		}
+		TaskTime::stop("RenderSystem");
 	}
 private:
 	bool IsEntityOutsideCameraView(const TransformComponent& transformComponent, const SpriteComponent& spriteComponent, const SDL_Rect& pCamera) const {

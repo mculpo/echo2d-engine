@@ -897,6 +897,9 @@
     <ClInclude Include="src\Core\Time.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\TimeRecording\TaskTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glm\detail\func_common.inl">
@@ -1349,6 +1352,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\LoaderLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\TimeRecording\TaskTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

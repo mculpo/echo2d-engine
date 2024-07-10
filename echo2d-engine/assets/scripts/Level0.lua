@@ -113,7 +113,7 @@ Level = {
             tag = "player",
             components = {
                 transform = {
-                    position = { x = 242, y = 110 },
+                    position = { x = math.random(100, 300), y = math.random(100, 300) },
                     scale = { x = 1.0, y = 1.0 },
                     rotation = 0.0, -- degrees
                 },

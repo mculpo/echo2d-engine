@@ -14,6 +14,7 @@ public:
 	}
 	~CameraMovementSystem() {}
 	void Update(SDL_Rect& pCamera) {
+		TaskTime::start("CameraMovementSystem");
 		for (auto entity : GetSystemEntities()) {
 			auto transform = entity.GetComponent<TransformComponent>();
 			if (transform.position.x + (pCamera.w / 2) < EchoGame::mapWidth) {
@@ -28,6 +29,7 @@ public:
 			pCamera.x = pCamera.x > pCamera.w ? pCamera.w : pCamera.x;
 			pCamera.y = pCamera.y > pCamera.h ? pCamera.h : pCamera.y;
 		}
+		TaskTime::stop("CameraMovementSystem");
 	}
 
 };

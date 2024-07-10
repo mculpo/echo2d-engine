@@ -438,6 +438,7 @@
     <ClInclude Include="src\Systems\RenderSystem.h" />
     <ClInclude Include="src\Systems\RenderTextSystem.h" />
     <ClInclude Include="src\Systems\ScriptSystem.h" />
+    <ClInclude Include="src\Core\TimeRecording\TaskTimer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\scripts\Level0.lua" />
@@ -589,6 +590,7 @@
     <ClCompile Include="libs\imgui\backends\imgui_impl_sdl2.cpp" />
     <ClCompile Include="libs\imgui\backends\imgui_impl_sdlrenderer2.cpp" />
     <ClCompile Include="libs\imgui\imgui_tables.cpp" />
+    <ClCompile Include="src\Core\TimeRecording\TaskTimer.cpp" />
     <ClCompile Include="src\Game\LoaderLevel.cpp" />
     <ClCompile Include="src\AssetStore\AssetStore.cpp" />
     <ClCompile Include="libs\glm\detail\glm.cpp" />

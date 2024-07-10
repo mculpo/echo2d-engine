@@ -15,6 +15,9 @@ public:
 	}
 
 	void Update(std::unique_ptr<EventBus>& pEventBus) {
+
+		TaskTime::start("Collider");
+
 		auto entities = GetSystemEntities();
 
 		for (auto i = entities.begin(); i != entities.end(); i++) {
@@ -38,6 +41,7 @@ public:
 				}
 			}
 		}
+		TaskTime::stop("Collider");
 	}
 
 	bool CheckAABBCollision(double aX, double aY, double aW, double aH, double bX, double bY, double bW, double bH) {

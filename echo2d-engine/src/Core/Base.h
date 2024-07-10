@@ -50,6 +50,7 @@ const int SCREEN_HEIGHT = 600;
 
 
 #include "../Core/Time.h"
+#include "../Core/TimeRecording/TaskTimer.h"
 #endif
 
 

@@ -11,6 +11,7 @@ public:
 	}
 
 	void Update(SDL_Renderer* pRenderer, std::unique_ptr<AssetStore>& pAssetStore, SDL_Rect& pCamera) {
+		TaskTime::start("RenderTextSystem");
 		for (auto entity : GetSystemEntities()) {
 			const auto textLabel = entity.GetComponent<TextComponent>();
 
@@ -38,6 +39,7 @@ public:
 			SDL_RenderCopy(pRenderer, texture, NULL, &dstRect);
 			SDL_DestroyTexture(texture);
 		}
+		TaskTime::stop("RenderTextSystem");
 	}
 };
 

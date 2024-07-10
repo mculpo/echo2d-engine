@@ -15,9 +15,9 @@ public:
 	}
 
 	void Update(SDL_Renderer* pRenderer, std::unique_ptr<AssetStore>& pAssetStore, SDL_Rect& pCamera) {
-		
+		TaskTime::start("RenderHealthBarSystem");
 
-		
+		auto pico = pAssetStore->GetFont("pico8-font-10");
 
 		for (auto entity : GetSystemEntities()) {
 
@@ -47,7 +47,7 @@ public:
 			SDL_Surface* surface;
 			SDL_Texture* texture;
 
-			surface = TTF_RenderText_Blended(pAssetStore->GetFont("pico8-font-10"), healthText.c_str(), currentColor);
+			surface = TTF_RenderText_Blended(pico, healthText.c_str(), currentColor);
 			texture = SDL_CreateTextureFromSurface(pRenderer, surface);
 
 			SDL_FreeSurface(surface);
@@ -67,6 +67,7 @@ public:
 			SDL_RenderCopy(pRenderer, texture, NULL, &dstRect);
 			SDL_DestroyTexture(texture);
 		}
+		TaskTime::stop("RenderHealthBarSystem");
 	}
 private:
 
