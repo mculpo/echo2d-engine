@@ -24,14 +24,17 @@ public:
 			auto& _curAnimation = animation.animations[animation.currentAnimation];
 			auto _curAnimFrame = _curAnimation.animationFrames[_curAnimation.currentFrame];
 			if (animation.currentTimeAnimation >= _curAnimFrame.timeToEnd) {
-				bool isLastFrame = _curAnimation.currentFrame >= _curAnimation.animationFrames.size() - 1;
-				if (isLastFrame && _curAnimation.isLoop) {
-					_curAnimation.currentFrame = 0;
+				animation.currentTimeAnimation = 0;
+
+				if (_curAnimation.isLoop) {
+					_curAnimation.currentFrame = (_curAnimation.currentFrame + 1) % _curAnimation.animationFrames.size();
 				}
 				else {
-					_curAnimation.currentFrame++;
+					if (_curAnimation.currentFrame < _curAnimation.animationFrames.size() - 1) {
+						_curAnimation.currentFrame++;
+					}
 				}
-				animation.currentTimeAnimation = 0;
+				
 				_curAnimFrame = _curAnimation.animationFrames[_curAnimation.currentFrame];
 			}
 
@@ -39,16 +42,6 @@ public:
 			sprite.srcRect.y = _curAnimFrame.rect.y;
 			sprite.srcRect.w = _curAnimFrame.rect.w;
 			sprite.srcRect.h = _curAnimFrame.rect.h;
-
-
-			//// Verifica se é hora de avançar para o próximo quadro
-			//if (currentTime - animation.lastUpdateTime >= (1000 / animation.frameSpeedRate)) {
-			//	animation.currentFrame = (animation.currentFrame + 1) % animation.numFrames;
-			//	animation.lastUpdateTime = currentTime;
-			//}
-
-			///*animation.currentFrame = 
-			//	((SDL_GetTicks() - animation.startTime) * animation.frameSpeedRate / 1000) % animation.numFrames;*/
 		}
 	}
 };

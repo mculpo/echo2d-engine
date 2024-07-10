@@ -29,6 +29,8 @@
 
 int EchoGame::windowWidth;
 int EchoGame::windowHeight;
+int EchoGame::logicalWindowHeight;
+int EchoGame::logicalWindowWidth;
 int EchoGame::mapWidth;
 int EchoGame::mapHeight;
 
@@ -57,8 +59,11 @@ void EchoGame::Initialize()
 
 	SDL_DisplayMode displayMode;
 	SDL_GetCurrentDisplayMode(0, &displayMode);
-	windowWidth = 800; //displayMode.w;
-	windowHeight = 600; //displayMode.h;
+	windowWidth = SCREEN_WIDTH; //displayMode.w;
+	windowHeight = SCREEN_HEIGHT; //displayMode.h;
+	logicalWindowWidth = SCREEN_WIDTH;
+	logicalWindowHeight = SCREEN_HEIGHT;
+
 	mWindow = SDL_CreateWindow(
 		NULL,
 		SDL_WINDOWPOS_CENTERED,
@@ -83,6 +88,8 @@ void EchoGame::Initialize()
 		LOG_ERROR("Error creating SDL renderer");
 		return;
 	}
+
+	SDL_RenderSetLogicalSize(mRenderer, logicalWindowWidth, logicalWindowHeight);
 
 #ifdef _DEBUG
 	// Inicializa ImGui

@@ -17,10 +17,10 @@ public:
 		for (auto entity : GetSystemEntities()) {
 			auto transform = entity.GetComponent<TransformComponent>();
 			if (transform.position.x + (pCamera.w / 2) < EchoGame::mapWidth) {
-				pCamera.x = transform.position.x - (EchoGame::windowWidth / 2);
+				pCamera.x = transform.position.x - (EchoGame::logicalWindowWidth / 2);
 			}
 			if (transform.position.y + (pCamera.h / 2) < EchoGame::mapHeight) {
-				pCamera.y = transform.position.y - (EchoGame::windowHeight / 2);
+				pCamera.y = transform.position.y - (EchoGame::logicalWindowHeight / 2);
 			}
 
 			pCamera.x = pCamera.x < 0 ? 0 : pCamera.x;

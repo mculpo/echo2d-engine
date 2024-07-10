@@ -43,6 +43,11 @@ const SDL_Color SDL_COLOR_GRAY = { 128, 128, 128, 255 };
 const SDL_Color SDL_COLOR_BROWN = { 165, 42, 42, 255 };
 const SDL_Color SDL_COLOR_PINK = { 255, 192, 203, 255 };
 
+const int NES_WIDTH = 256;
+const int NES_HEIGHT = 240;
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
+
 
 #include "../Core/Time.h"
 #endif
