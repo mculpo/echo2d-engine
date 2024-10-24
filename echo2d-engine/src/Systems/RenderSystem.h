@@ -59,7 +59,7 @@ public:
 				&destRect,
 				entity.transformComponent.get().rotation,
 				NULL,
-				entity.spriteComponent.get().flip
+				(SDL_RendererFlip) entity.spriteComponent.get().flip
 			);
 		}
 		TaskTime::stop("RenderSystem");

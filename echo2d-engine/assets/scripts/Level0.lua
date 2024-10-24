@@ -202,7 +202,7 @@ Level = {
                 },
                 projectile_emitter = {
                     projectile_velocity = { x = 200, y = 200 },
-                    projectile_duration = 10, -- seconds
+                    projectile_duration = 100, -- seconds
                     repeat_frequency = 0, -- seconds
                     hit_percentage_damage = 10,
                     friendly = true

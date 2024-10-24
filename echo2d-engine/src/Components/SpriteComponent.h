@@ -6,9 +6,9 @@ struct SpriteComponent {
 	std::string texture;
 	int zIndex;
 	SDL_Rect srcRect;
-	SDL_RendererFlip flip;
+	int flip;
 	bool isStatic;
-	SpriteComponent(std::string pTexture = "", int pWidth = 0, int pHeight = 0, int pZIndex = 0, bool pIsStatic = false ,int srcRectX = 0, int srcRectY = 0, SDL_RendererFlip pFlip = SDL_FLIP_NONE) {
+	SpriteComponent(std::string pTexture = "", int pWidth = 0, int pHeight = 0, int pZIndex = 0, bool pIsStatic = false ,int srcRectX = 0, int srcRectY = 0, int pFlip = SDL_FLIP_NONE) {
 		texture = pTexture;
 		srcRect = { srcRectX, srcRectY, pWidth, pHeight };
 		zIndex = pZIndex;

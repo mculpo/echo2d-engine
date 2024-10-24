@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "echo2d-engine", "echo2d-engine.vcxproj", "{8A129D54-97FA-44F0-BDCB-E86B4D0E763A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "echo2d-mapa-editor", "..\echo2d-mapa-editor\echo2d-mapa-editor.vcxproj", "{CE138C96-4890-454E-9B39-AAF8360A41EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{8A129D54-97FA-44F0-BDCB-E86B4D0E763A}.Release|x64.Build.0 = Release|x64
 		{8A129D54-97FA-44F0-BDCB-E86B4D0E763A}.Release|x86.ActiveCfg = Release|Win32
 		{8A129D54-97FA-44F0-BDCB-E86B4D0E763A}.Release|x86.Build.0 = Release|Win32
+		{CE138C96-4890-454E-9B39-AAF8360A41EB}.Debug|x64.ActiveCfg = Debug|x64
+		{CE138C96-4890-454E-9B39-AAF8360A41EB}.Debug|x64.Build.0 = Debug|x64
+		{CE138C96-4890-454E-9B39-AAF8360A41EB}.Debug|x86.ActiveCfg = Debug|Win32
+		{CE138C96-4890-454E-9B39-AAF8360A41EB}.Debug|x86.Build.0 = Debug|Win32
+		{CE138C96-4890-454E-9B39-AAF8360A41EB}.Release|x64.ActiveCfg = Release|x64
+		{CE138C96-4890-454E-9B39-AAF8360A41EB}.Release|x64.Build.0 = Release|x64
+		{CE138C96-4890-454E-9B39-AAF8360A41EB}.Release|x86.ActiveCfg = Release|Win32
+		{CE138C96-4890-454E-9B39-AAF8360A41EB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

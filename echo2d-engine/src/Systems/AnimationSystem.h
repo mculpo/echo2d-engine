@@ -37,7 +37,6 @@ public:
 						_curAnimation.currentFrame++;
 					}
 				}
-				
 				_curAnimFrame = _curAnimation.animationFrames[_curAnimation.currentFrame];
 			}
 

@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)libs;C:\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)libs\lua;C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)libs;$(SolutionDir)libs\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)libs\lua;$(SolutionDir)libs\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>E:\Projetos\C++\echo2d-engine\echo2d-engine\libs;C:\SDL2\include;$(IncludePath)</IncludePath>

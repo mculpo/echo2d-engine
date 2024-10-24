@@ -270,6 +270,8 @@ public:
 	bool EntityBelongsToGroup(Entity pEntity, const std::string& pGroup) const;
 	std::vector<Entity> GetEntitiesByGroup(const std::string& pGroup) const;
 	void RemoveEntityGroup(Entity pEntity);
+
+	int GetAmountOfObjects() const;
 };
 
 /*

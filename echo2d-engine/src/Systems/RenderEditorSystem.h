@@ -103,23 +103,82 @@ public:
 
 		//ImGui::End();
 		Uint32 currentTime = SDL_GetTicks();
-		if (ImGui::Begin("Profile Systems")) {
-			static std::map<std::string, float> allDurations;
+		
 
-			if (currentTime - lastUpdateTime >= 200) {
-				lastUpdateTime = currentTime;
-				allDurations = TaskTime::getAllDurations();
+		if (ImGui::BeginMainMenuBar()) {
+			if (ImGui::BeginMenu("Editores")) {
+				if (ImGui::MenuItem("Profile")) {
+					showProfile = !showProfile;
+				}
+				if (ImGui::MenuItem("Editor de Mapa")) {
+					showMapEditor = !showMapEditor;
+				}
+				if (ImGui::MenuItem("Editor de Sprite")) {
+					showSpriteEditor = !showSpriteEditor;
+				}
+				ImGui::EndMenu();
 			}
-
-			// Iterando sobre o mapa e imprimindo os valores
-			for (const auto& pair : allDurations) {
-				// Exibindo o nome da tarefa e a duração formatada
-				ImGui::Text("%s   %.2f fps   %.1f ms", pair.first.c_str(), pair.second == 0 ? 0 : 1000 / pair.second, pair.second);
-				ImGui::Separator();
-			}
-
+			ImGui::EndMainMenuBar();
 		}
-		ImGui::End();
+
+		// Show editor dialogs
+		if (showMapEditor) {
+			ImGui::Begin("Editor de Mapa", nullptr);
+
+			ImGui::Text("Este é o editor de mapa.");
+
+			// Ajusta a posição do cursor para o canto superior direito
+			ImGui::SetCursorPosX(ImGui::GetWindowWidth() - 70); // Ajuste a largura do botão se necessário
+			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 30);
+			if (ImGui::Button("Fechar")) {
+				showMapEditor = false; // Altera a variável para fechar a janela
+			}
+
+
+			ImGui::End();
+		}
+		if (showSpriteEditor) {
+			ImGui::Begin("Editor de Sprite", nullptr);
+			ImGui::Text("Este é o editor de sprite.");
+
+			// Ajusta a posição do cursor para o canto superior direito
+			ImGui::SetCursorPosX(ImGui::GetWindowWidth() - 70); // Ajuste a largura do botão se necessário
+			ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 30);
+			if (ImGui::Button("Fechar")) {
+				showSpriteEditor = false; // Altera a variável para fechar a janela
+			}
+
+			ImGui::End();
+		}
+
+		if (showProfile) {
+			ImGui::Begin("Profile Systems");
+				static std::map<std::string, float> allDurations;
+
+				if (currentTime - lastUpdateTime >= 200) {
+					lastUpdateTime = currentTime;
+					allDurations = TaskTime::getAllDurations();
+				}
+
+				// Iterando sobre o mapa e imprimindo os valores
+				for (const auto& pair : allDurations) {
+					// Exibindo o nome da tarefa e a duração formatada
+					ImGui::Text("%s   %.2f fps   %.1f ms", pair.first.c_str(), pair.second == 0 ? 0 : 1000 / pair.second, pair.second);
+					ImGui::Separator();
+				}
+
+				ImGui::Text("Total de Objetos   %d", pRegistry->GetAmountOfObjects());
+				ImGui::Separator();
+
+				// Ajusta a posição do cursor para o canto superior direito
+				ImGui::SetCursorPosX(ImGui::GetWindowWidth() - 70); // Ajuste a largura do botão se necessário
+				ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 30);
+				if (ImGui::Button("Fechar")) {
+					showProfile = false; // Altera a variável para fechar a janela
+				}
+
+			ImGui::End();
+		}
 
 		// Display a small overlay window to display the map position using the mouse
 		/*ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoNav;
@@ -129,7 +188,6 @@ public:
 			ImGui::Text(
 				"Map coordinates (x=%.1f, y=%.1f)",
 				ImGui::GetIO().MousePos.x + pCamera.x,
-				ImGui::GetIO().MousePos.y + pCamera.y
 			);
 		}
 		ImGui::End();*/
@@ -139,6 +197,9 @@ public:
 	}
 private:
 	Uint32 lastUpdateTime;
+	bool showMapEditor = false;
+	bool showSpriteEditor = false;
+	bool showProfile = false;
 };
 
 #endif

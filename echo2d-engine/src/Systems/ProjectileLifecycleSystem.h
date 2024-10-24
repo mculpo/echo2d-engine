@@ -15,7 +15,7 @@ public:
 			auto projectile = entity.GetComponent<ProjectileComponent>();
 
 			if (SDL_GetTicks() - projectile.startTime > projectile.duration) {
-				entity.Destroy();
+  				entity.Destroy();
 			}
 		}
 	}

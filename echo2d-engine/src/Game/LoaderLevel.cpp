@@ -246,8 +246,8 @@ void LoaderLevel::LoadLevel(
 						entity["components"]["projectile_emitter"]["projectile_velocity"]["x"].get_or(0),
 						entity["components"]["projectile_emitter"]["projectile_velocity"]["y"].get_or(0)
 					),
-					entity["components"]["projectile_emitter"]["projectile_duration"].get_or(1) * 1000,
 					entity["components"]["projectile_emitter"]["repeat_frequency"].get_or(10) * 1000,
+					entity["components"]["projectile_emitter"]["projectile_duration"].get_or(1) * 1000,
 					entity["components"]["projectile_emitter"]["hit_percentage_damage"].get_or(10),
 					entity["components"]["projectile_emitter"]["friendly"].get_or(false)
 				);

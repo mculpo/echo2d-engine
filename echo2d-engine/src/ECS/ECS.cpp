@@ -173,6 +173,11 @@ void Registry::RemoveEntityGroup(Entity pEntity)
 	}
 }
 
+int Registry::GetAmountOfObjects() const
+{
+	return mNumEntities;
+}
+
 Registry::Registry()
 {
 	LOG_INFO("Registry created!");
