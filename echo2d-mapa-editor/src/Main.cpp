@@ -1,10 +1,14 @@
 #ifndef MAIN_ECHOMAPAEDITOR2D
 #define MAIN_ECHOMAPAEDITOR2D
-#include <iostream>
+#include "Core/Core.h"
+#include "MapaEditor/MapaEditor.h"
 
-int main() {
+int main(int argc, char* argv[]) {
 
-	return 0;
+    MapaEditor *mMapEditor = new MapaEditor();
+    mMapEditor->Run();
+
+    return 0;
 }
 
 #endif
